@@ -11,6 +11,8 @@ const NAME_TO_WEAPON = Object.fromEntries(weapons.map(w => [w.name, w]));
 
 const atk = getStore(`${storeKey}/atk`, 700);
 const def = getStore(`${storeKey}/def`, 400);
+const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
+const poisonAfterWeapon = getStore(`${storeKey}/poisonAfterWeapon`, false);
 const compareList = getStore(`${storeKey}/compareList`, weapons.map(w => [w.name]));
 const sortMethod = getStore(`${storeKey}/sortMethod`, {
   field: null,
@@ -30,13 +32,25 @@ let calcedCompareList = [];
 let sortedCompareList = [];
 
 $: {
-  result = simulate($atk, $def, combos);
+  result = simulate({
+    atk: $atk,
+    def: $def,
+    weapons: combos,
+    poisonTurns: $poisonTurns,
+    poisonAfterWeapon: $poisonAfterWeapon
+  });
 }
 
 $: {
   calcedCompareList = $compareList.map((names, i) => {
     const weapons = names.map(n => NAME_TO_WEAPON[n]);
-    const result = simulate($atk, $def, weapons);
+    const result = simulate({
+      atk: $atk,
+      def: $def,
+      weapons,
+      poisonTurns: $poisonTurns,
+      poisonAfterWeapon: $poisonAfterWeapon
+    });
     return {
       name: names.join("+"),
       cost: result.summary.cost,
@@ -97,6 +111,12 @@ function deleteCompare(i) {
   <input type="number" bind:value={$atk}>
   <span>防禦</span>
   <input type="number" bind:value={$def}>
+  <span>中毒發生次數</span>
+  <input type="number" bind:value={$poisonTurns}>
+  <label class="cspan">
+    <input type="checkbox" bind:checked={$poisonAfterWeapon}>
+    <span>使用武器後中毒（格蕾絲）</span>
+  </label>
 </div>
 
 <h2>Combo</h2>
@@ -192,6 +212,9 @@ function deleteCompare(i) {
 .chead {
   background: #eee;
   font-weight: bold;
+}
+.cspan {
+  grid-column-end: span 2;
 }
 .compare-list {
   width: fit-content;

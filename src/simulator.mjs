@@ -10,7 +10,9 @@ const WEAPON_MOD = {
   SS: 2.6
 };
 
-export function simulate(atk, def, weapons) {
+export function simulate({
+  atk, def, weapons, poisonTurns = 99, poisonAfterWeapon
+}) {
   const stages = [];
   let state = {
     atk,
@@ -18,6 +20,9 @@ export function simulate(atk, def, weapons) {
     stance: 0,
     buff: [],
     targetBuff: [],
+    poisonTurns,
+    poison: [],
+    poisonAfterWeapon
   };
   for (const weapon of weapons) {
     const result = calculateDamage(state, weapon);
@@ -38,11 +43,10 @@ export function simulate(atk, def, weapons) {
 
 function calculateDamage(state, weapon) {
   const newState = {
-    atk: state.atk,
-    def: state.def,
-    stance: state.stance,
+    ...state,
     buff: [],
     targetBuff: [],
+    poison: [],
   };
   let damage = 0;
   if (weapon.atk || weapon.modLv) {
@@ -92,6 +96,38 @@ function calculateDamage(state, weapon) {
       def += b.def || 0;
     }
     damage += Math.max(weapon.trap.atk - def, 1);
+  }
+
+  newState.poison.push(...state.poison);
+  if (weapon.poison?.atk) {
+    damage += weapon.poison.atk * Math.min(state.poisonTurns, weapon.poison.turn) / weapon.poison.turn;
+    newState.poison.push({
+      atk: weapon.poison.atk,
+      turn: weapon.poison.turn,
+      bonus: 0
+    });
+  }
+
+  if (weapon.poison?.bonus) {
+    let poisonDamage = 0;
+    for (let i = 0; i < newState.poison.length; i++) {
+      const p = newState.poison[i];
+      let newBonus = (p.bonus + 100) * (weapon.poison.bonus + 100) / 100 - 100;
+      newBonus = Math.min(newBonus, 200);
+      poisonDamage += p.atk * Math.min(state.poisonTurns, p.turn) / p.turn * (newBonus - p.bonus) / 100;
+      newState.poison[i] = {...p, bonus: newBonus};
+    }
+    damage += poisonDamage;
+  }
+
+  if (state.poisonAfterWeapon) {
+    // 格蕾斯
+    damage += 300 * Math.min(2, state.poisonTurns) / 2;
+    newState.poison.push({
+      atk: 300,
+      turn: 2,
+      bonus: 0
+    });
   }
 
   if (weapon.buff) {
