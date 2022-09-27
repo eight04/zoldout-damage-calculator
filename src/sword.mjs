@@ -48,6 +48,7 @@ export default [
   },
   {
     name: "突襲彎刀",
+    cost: 4,
     grade: 2,
     atk: 570,
     modLv: "D"

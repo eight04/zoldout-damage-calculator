@@ -15,7 +15,7 @@ const sortMethod = getStore("sortMethod", {
   dir: 1
 });
 
-let combos = [];
+let combos = [weapons[0]];
 let result = {
   stages: [],
   summary: {
@@ -32,41 +32,57 @@ $: {
 }
 
 $: {
-  calcedCompareList = $compareList.map(names => {
+  calcedCompareList = $compareList.map((names, i) => {
     const weapons = names.map(n => NAME_TO_WEAPON[n]);
     const result = simulate($atk, $def, weapons);
     return {
       name: names.join("+"),
       cost: result.summary.cost,
       damage: result.summary.damage,
-      cp: result.summary.cp
+      cp: result.summary.cp,
+      index: i
     };
   });
 }
 
 $: {
+  console.log("sort")
   sortedCompareList = calcedCompareList.slice();
-  if (sortMethod.field) {
+  if ($sortMethod.field) {
     sortedCompareList.sort((a, b) => {
-      let result = a[sortMethod.field] < b[sortMethod.field] ? -1 :
-        a[sortMethod.field] > b[sortMethod.field] ? 1 : 0;
-      return result * sortMethod.dir;
+      let result = a[$sortMethod.field] < b[$sortMethod.field] ? -1 :
+        a[$sortMethod.field] > b[$sortMethod.field] ? 1 : 0;
+      return result * $sortMethod.dir;
     });
   }
 }
 
-function addCombo() {
-  combos.push(weapons[0]);
+function addCombo(i) {
+  combos.splice(i, 0, combos[i]);
   combos = combos;
 }
 
 function deleteCombo(i) {
+  if (combos.length <= 1) return;
   combos.splice(i, 1);
+  combos = combos;
+}
+
+function moveCombo(i, dir) {
+  const t = combos[i];
+  combos.splice(i, 1);
+  combos.splice(i + dir, 0, t);
   combos = combos;
 }
 
 function addToCompare() {
   $compareList.push(combos.map(w => w.name));
+  $compareList = $compareList;
+}
+
+function deleteCompare(i) {
+  $compareList.splice(i, 1);
+  $compareList = $compareList;
 }
 
 </script>
@@ -80,13 +96,12 @@ function addToCompare() {
   <input type="number" bind:value={$def}>
 </div>
 
-<button on:click={addCombo}>Add weapon</button>
 <div class="combo-table">
-  <span>Weapon</span>
-  <span>Cost</span>
-  <span>Damage</span>
-  <span>CP</span>
-  <span>Delete</span>
+  <span class="chead">Weapon</span>
+  <span class="chead">Cost</span>
+  <span class="chead">Damage</span>
+  <span class="chead">CP</span>
+  <span></span>
   {#each combos as weapon, i}
     <select bind:value={weapon}>
       {#each weapons as w}
@@ -102,9 +117,14 @@ function addToCompare() {
     <span>
       {((result.stages[i]?.damage || 0) / weapon.cost).toFixed(0)}
     </span>
-    <button on:click={() => deleteCombo(i)}>x</button>
+    <div class="operation">
+      <button on:click={() => moveCombo(i, -1)}>&uarr;</button>
+      <button on:click={() => moveCombo(i, 1)}>&darr;</button>
+      <button on:click={() => addCombo(i)}>&#x2398;</button>
+      <button on:click={() => deleteCombo(i)}>x</button>
+    </div>
   {/each}
-  <span>Summary</span>
+  <span class="chead">Summary</span>
   <span>{result.summary.cost}</span>
   <span>{result.summary.damage.toFixed(0)}</span>
   <span>{result.summary.cp.toFixed(0)}</span>
@@ -117,11 +137,13 @@ function addToCompare() {
   <SortButton field="cost" text="Cost" bind:method={$sortMethod} />
   <SortButton field="damage" text="Damage" bind:method={$sortMethod} />
   <SortButton field="cp" text="CP" bind:method={$sortMethod} />
+  <span></span>
   {#each sortedCompareList as row}
     <span>{row.name}</span>
     <span>{row.cost}</span>
-    <span>{row.damage}</span>
-    <span>{row.cp}</span>
+    <span>{row.damage.toFixed(0)}</span>
+    <span>{row.cp.toFixed(0)}</span>
+    <button on:click={() => deleteCompare(row.index)}>x</button>
   {/each}
 </div>
 
@@ -133,15 +155,50 @@ function addToCompare() {
 :global(body) {
   font-size: 16px;
   font-family: sans-serif;
-  margin: 2em;
+  margin: 2em auto;
+  max-width: 600px;
 }
 :global(input), :global(button), :global(select) {
   font-size: .95em;
   font-family: inherit;
   padding: .3em .6em;
+  vertical-align: middle;
+}
+.base-info {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  gap: 1em;
+  margin: 1em 0;
+}
+.combo-table {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  align-items: center;
+  gap: .2em;
+  margin: 1em 0;
+}
+.combo-table > * {
+  padding: .3em .6em;
+}
+.chead {
+  background: #eee;
+  font-weight: bold;
+}
+.compare-list {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  align-items: center;
+  gap: .2em;
+  margin: 1em 0;
+}
+.compare-list > * {
+  padding: .3em .6em;
 }
 footer {
-  text-align: right;
+  text-align: center;
   margin: 1.2em;
 }
 </style>

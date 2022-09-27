@@ -16,3 +16,11 @@ function sort() {
   on:click={sort}>{text}</button>
 
 
+<style>
+.sorted::after {
+  content: "↓";
+}
+.sorted.reversed::after {
+  content: "↑";
+}
+</style>
