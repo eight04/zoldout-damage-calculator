@@ -13,7 +13,10 @@ import re from "rollup-plugin-re";
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-  input: 'src/index.mjs',
+  input: [
+    'src/index.mjs',
+    "src/bow.mjs"
+  ],
   output: {
     sourcemap: true,
     format: 'esm',
@@ -56,8 +59,8 @@ export default {
     
     output([
       {
-        test: /index\.js$/,
-        target: "docs/index.html",
+        test: /(\b[a-z]+)\.js$/,
+        target: "docs/$1.html",
         handle: (content, {htmlScripts}) => content.replace(/.*<\/body>/, `${htmlScripts}</body>`)
       },
       {

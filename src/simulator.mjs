@@ -16,7 +16,8 @@ export function simulate(atk, def, weapons) {
     atk,
     def,
     stance: 0,
-    buff: []
+    buff: [],
+    targetBuff: [],
   };
   for (const weapon of weapons) {
     const result = calculateDamage(state, weapon);
@@ -40,7 +41,8 @@ function calculateDamage(state, weapon) {
     atk: state.atk,
     def: state.def,
     stance: state.stance,
-    buff: []
+    buff: [],
+    targetBuff: [],
   };
   let damage = 0;
   if (weapon.atk || weapon.modLv) {
@@ -58,7 +60,13 @@ function calculateDamage(state, weapon) {
     if (weapon?.stance?.use === state.stance) {
       bonus += weapon.stance.bonus || 0;
     }
-    damage = (atk - state.def) * (100 + bonus) / 100;
+    let def = state.def;
+    for (const b of state.targetBuff) {
+      def += b.def || 0;
+    }
+    // FIXME: is it possible to have negative def?
+    const hit = weapon.hit || 1;
+    damage = (atk - def) * hit * (100 + bonus) / 100;
     damage = Math.max(damage, 1);
   }
 
@@ -68,12 +76,31 @@ function calculateDamage(state, weapon) {
         newState.buff.push({...b, times: b.times - 1});
       }
     }
+    for (const b of state.targetBuff) {
+      if (b.times > 1) {
+        newState.targetBuff.push({...b, times: b.times - 1});
+      }
+    }
   } else {
     newState.buff.push(...state.buff);
+    newState.targetBuff.push(...state.targetBuff);
   }
+
+  if (weapon.trap) {
+    let def = state.def;
+    for (const b of state.targetBuff) {
+      def += b.def || 0;
+    }
+    damage += Math.max(weapon.trap.atk - def, 1);
+  }
+
   if (weapon.buff) {
     newState.buff.push(...weapon.buff);
   }
+  if (weapon.targetBuff) {
+    newState.targetBuff.push(...weapon.targetBuff);
+  }
+
   if (weapon?.stance?.use === state.stance && weapon.stance.buff) {
     newState.buff.push(...weapon.stance.buff);
   }

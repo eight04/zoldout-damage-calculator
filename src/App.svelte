@@ -1,16 +1,18 @@
 <script>
 import SortButton from "./SortButton.svelte";
+import Nav from "./Nav.svelte";
 
-import weapons from "./sword.mjs";
 import {getStore} from "./store.mjs";
 import {simulate} from "./simulator.mjs";
 
+export let weapons, storeKey;
+
 const NAME_TO_WEAPON = Object.fromEntries(weapons.map(w => [w.name, w]));
 
-const atk = getStore("atk", 700);
-const def = getStore("def", 400);
-const compareList = getStore("compareList", []);
-const sortMethod = getStore("sortMethod", {
+const atk = getStore(`${storeKey}/atk`, 700);
+const def = getStore(`${storeKey}/def`, 400);
+const compareList = getStore(`${storeKey}/compareList`, weapons.map(w => [w.name]));
+const sortMethod = getStore(`${storeKey}/sortMethod`, {
   field: null,
   dir: 1
 });
@@ -46,7 +48,6 @@ $: {
 }
 
 $: {
-  console.log("sort")
   sortedCompareList = calcedCompareList.slice();
   if ($sortMethod.field) {
     sortedCompareList.sort((a, b) => {
@@ -89,12 +90,16 @@ function deleteCompare(i) {
 
 <h1>Zold:Out Damage Calculator</h1>
 
+<Nav />
+
 <div class="base-info">
   <span>力量</span>
   <input type="number" bind:value={$atk}>
   <span>防禦</span>
   <input type="number" bind:value={$def}>
 </div>
+
+<h2>Combo</h2>
 
 <div class="combo-table">
   <span class="chead">Weapon</span>
@@ -131,6 +136,8 @@ function deleteCompare(i) {
 </div>
 
 <button on:click={addToCompare}>Add to compare list</button>
+
+<h2>Compare</h2>
 
 <div class="compare-list">
   <SortButton field="name" text="Name" bind:method={$sortMethod} />
