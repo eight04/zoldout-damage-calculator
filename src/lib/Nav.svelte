@@ -8,7 +8,7 @@ const page = !match[1] || match[1] === "index" ? "sword" : match[1];
   <li class:active={page === "sword"}><a href=".">劍</a></li>
   <li class:active={page === "bow"}><a href="bow.html">弓</a></li>
   <li class:active={page === "wand"}><a href="wand.html">杖</a></li>
-  <li class:active={page === "book"}><a href="book.html">書</a></li>
+  <li class:active={page === "tome"}><a href="tome.html">書</a></li>
 </ul>
 
 <style>

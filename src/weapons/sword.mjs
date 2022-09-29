@@ -160,7 +160,7 @@ export default [
     stance: {
       gain: 1
     },
-    atkBonusOnBack: 50
+    bonus: 50
   },
   {
     name: "結晶神聖劍",

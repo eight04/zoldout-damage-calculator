@@ -10,9 +10,19 @@ export let weapons, storeKey;
 const NAME_TO_WEAPON = Object.fromEntries(weapons.map(w => [w.name, w]));
 
 const atk = getStore(`${storeKey}/atk`, 700);
-const def = getStore(`${storeKey}/def`, 400);
+const def = getStore(`${storeKey}/def`, 200);
+const int = getStore(`${storeKey}/int`, 700);
+const mdef = getStore(`${storeKey}/mdef`, 200);
+
+const fireResist = getStore(`${storeKey}/fireResist`, 0);
+const waterResist = getStore(`${storeKey}/waterResist`, 0);
+const poisonResist = getStore(`${storeKey}/poisonResist`, 0);
+const lightningResist = getStore(`${storeKey}/lightningResist`, 0);
+
 const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
 const poisonAfterWeapon = getStore(`${storeKey}/poisonAfterWeapon`, false);
+const speedAfterFireWeapon = getStore(`${storeKey}/speedAfterFireWeapon`, false);
+
 const compareList = getStore(`${storeKey}/compareList`, weapons.map(w => [w.name]));
 const sortMethod = getStore(`${storeKey}/sortMethod`, {
   field: null,
@@ -30,14 +40,30 @@ let result = {
 };
 let calcedCompareList = [];
 let sortedCompareList = [];
+let options = {};
+
+$: {
+  options = {
+    atk: $atk,
+    def: $def,
+    int: $int,
+    mdef: $mdef,
+
+    poisonTurns: $poisonTurns,
+    poisonAfterWeapon: $poisonAfterWeapon,
+    speedAfterFireWeapon: $speedAfterFireWeapon,
+
+    fireResist: $fireResist,
+    waterResist: $waterResist,
+    poisonResist: $poisonResist,
+    lightningResist: $lightningResist
+  };
+}
 
 $: {
   result = simulate({
-    atk: $atk,
-    def: $def,
+    ...options,
     weapons: combos,
-    poisonTurns: $poisonTurns,
-    poisonAfterWeapon: $poisonAfterWeapon
   });
 }
 
@@ -45,11 +71,8 @@ $: {
   calcedCompareList = $compareList.map((names, i) => {
     const weapons = names.map(n => NAME_TO_WEAPON[n]);
     const result = simulate({
-      atk: $atk,
-      def: $def,
+      ...options,
       weapons,
-      poisonTurns: $poisonTurns,
-      poisonAfterWeapon: $poisonAfterWeapon
     });
     return {
       name: names.join("+"),
@@ -111,11 +134,27 @@ function deleteCompare(i) {
   <input type="number" bind:value={$atk}>
   <span>防禦</span>
   <input type="number" bind:value={$def}>
+  <span>智力</span>
+  <input type="number" bind:value={$int}>
+  <span>魔防</span>
+  <input type="number" bind:value={$mdef}>
+  <span>火抗</span>
+  <input type="number" bind:value={$fireResist}>
+  <span>水抗</span>
+  <input type="number" bind:value={$waterResist}>
+  <span>毒抗</span>
+  <input type="number" bind:value={$poisonResist}>
+  <span>雷抗</span>
+  <input type="number" bind:value={$lightningResist}>
   <span>中毒發生次數</span>
   <input type="number" bind:value={$poisonTurns}>
   <label class="cspan">
     <input type="checkbox" bind:checked={$poisonAfterWeapon}>
     <span>使用武器後中毒（格蕾絲）</span>
+  </label>
+  <label class="cspan">
+    <input type="checkbox" bind:checked={$speedAfterFireWeapon}>
+    <span>使用火武器後加速（歌莉雅）</span>
   </label>
 </div>
 
@@ -134,13 +173,13 @@ function deleteCompare(i) {
       {/each}
     </select>
     <span>
-      {weapon.cost}
+      {result.stages[i]?.cost}
     </span>
     <span>
       {result.stages[i]?.damage.toFixed(0)}
     </span>
     <span>
-      {((result.stages[i]?.damage || 0) / weapon.cost).toFixed(0)}
+      {((result.stages[i]?.damage || 0) / result.stages[i]?.cost).toFixed(0)}
     </span>
     <div class="operation">
       <button on:click={() => moveCombo(i, -1)}>&uarr;</button>
@@ -193,7 +232,7 @@ function deleteCompare(i) {
 }
 .base-info {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: max-content 1fr max-content 1fr;
   align-items: center;
   gap: 1em;
   margin: 1em 0;

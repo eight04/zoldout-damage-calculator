@@ -15,7 +15,9 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
   input: [
     'src/index.mjs',
-    "src/bow.mjs"
+    "src/bow.mjs",
+    "src/wand.mjs",
+    "src/tome.mjs"
   ],
   output: {
     sourcemap: true,
