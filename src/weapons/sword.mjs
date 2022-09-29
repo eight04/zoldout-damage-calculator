@@ -160,6 +160,16 @@ export default [
     stance: {
       gain: 1
     },
+  },
+  {
+    name: "暗殺者之劍（背）",
+    cost: 3,
+    grade: 3,
+    atk: 660,
+    modLv: "E",
+    stance: {
+      gain: 1
+    },
     bonus: 50
   },
   {
