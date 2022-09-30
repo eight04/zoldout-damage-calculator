@@ -159,7 +159,6 @@ function calculateDamage(state, weapon) {
   }
   if (hit && state.poisonAfterWeapon) {
     // 格蕾斯
-    damage += 300 * Math.min(2, state.poisonTurns) / 2;
     newState.poison.push({
       atk: 300,
       turn: 2,
