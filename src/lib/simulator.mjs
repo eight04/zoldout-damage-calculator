@@ -14,35 +14,48 @@ const WEAPON_MOD = {
   SSS: 2.85, // FIXME: confirm this
 };
 
+class State {
+  constructor({
+    atk, def, int, mdef,
+    fireResist, waterResist, poisonResist, lightningResist,
+    poisonTurns,
+    passive
+  }) {
+    this.atk = atk;
+    this.def = def;
+    this.int = int;
+    this.mdef = mdef;
+
+    this.fireResist = fireResist;
+    this.waterResist = waterResist;
+    this.poisonResist = poisonResist;
+    this.lightningResist = lightningResist;
+
+    this.poisonTurns = poisonTurns;
+    this.passive = passive;
+
+    this.damage = 0;
+    this.hit = 0;
+    this.totalHit = 0;
+    this.stance = 0;
+    this.totalHit = 0;
+    this.buff = [];
+    this.targetBuff = [];
+
+    this.poison = [];
+    this.lightning = {};
+  }
+  getDef(weapon) {
+    return getDef(this, weapon);
+  }
+}
+
 export function simulate({
-  atk, def, int, mdef, weapons, poisonTurns = 99, 
-  fireResist, waterResist, poisonResist, lightningResist,
-  passiveIds
+  weapons, passiveIds, ...options
 }) {
   const passive = allPassive.filter((p, i) => passiveIds.includes(i));
   const stages = [];
-  const state = {
-    atk,
-    def,
-    int,
-    mdef,
-    stance: 0,
-    totalHit: 0,
-    buff: [],
-    targetBuff: [],
-
-    poison: [],
-    lightning: {},
-
-    poisonTurns,
-
-    fireResist,
-    waterResist,
-    poisonResist,
-    lightningResist,
-
-    passive
-  };
+  const state = new State({...options, passive});
   for (const weapon of weapons) {
     const result = calculateDamage(state, weapon);
     stages.push(result);
@@ -93,8 +106,7 @@ function calculateDamage(state, weapon) {
 
   state.cost = weapon.casting || weapon.cost;
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
-  
-  let damage = 0;
+  state.damage = 0;
   const def = getDef(state, weapon);
   for (let i = 0; i < state.hit; i++) {
     state.currentHit = i + 1;
@@ -104,9 +116,9 @@ function calculateDamage(state, weapon) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
     // FIXME: is it possible to have negative def?
-    damage += Math.max(atk - def, 1);
+    state.damage += Math.max(atk - def, 1);
     if (state.lightning?.atk) {
-      damage += state.lightning.atk * (100 - state.lightningResist) / 100;
+      state.damage += state.lightning.atk * (100 - state.lightningResist) / 100;
     }
     calculatePassive(state, weapon, "afterHit");
   }
@@ -117,19 +129,19 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.trap) {
-    damage += Math.max(weapon.trap.atk - def, 1);
+    state.damage += Math.max(weapon.trap.atk - def, 1);
   }
 
   if (weapon.fire?.atk) {
-    damage += weapon.fire.atk * (100 - state.fireResist) / 100;
+    state.damage += weapon.fire.atk * (100 - state.fireResist) / 100;
   }
 
   if (weapon.water?.atk) {
-    damage += weapon.water.atk * (100 - state.waterResist) / 100;
+    state.damage += weapon.water.atk * (100 - state.waterResist) / 100;
   }
 
   if (weapon.lightning?.atk) {
-    damage += weapon.lightning.atk * (100 - state.lightningResist) / 100;
+    state.damage += weapon.lightning.atk * (100 - state.lightningResist) / 100;
     if (!state.lightning?.atk || weapon.lightning.time > state.lightning.time) {
       state.lightning = weapon.lightning;
     }
@@ -166,7 +178,7 @@ function calculateDamage(state, weapon) {
 
   calculatePassive(state, weapon, "afterWeapon");
 
-  damage += getPoisonDamage(state) - oldPoisonDamage;
+  state.damage += getPoisonDamage(state) - oldPoisonDamage;
 
-  return {damage, cost: state.cost};
+  return {damage: state.damage, cost: state.cost};
 }
