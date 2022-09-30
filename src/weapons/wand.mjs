@@ -238,6 +238,12 @@ const weapons = [
       atk: 250,
       time: 10
     }
+  },
+  {
+    name: "尤里走路",
+    cost: 2,
+    grade: 1,
+    atk: 900
   }
 ];
 

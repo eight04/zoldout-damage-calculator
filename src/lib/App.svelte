@@ -2,8 +2,10 @@
 import SortButton from "./SortButton.svelte";
 import Nav from "./Nav.svelte";
 
+import {currentPage} from "./env.mjs";
 import {getStore} from "./store.mjs";
 import {simulate} from "./simulator.mjs";
+import passive from "./passive.mjs";
 
 export let weapons, storeKey;
 
@@ -20,8 +22,7 @@ const poisonResist = getStore(`${storeKey}/poisonResist`, 0);
 const lightningResist = getStore(`${storeKey}/lightningResist`, 0);
 
 const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
-const poisonAfterWeapon = getStore(`${storeKey}/poisonAfterWeapon`, false);
-const speedAfterFireWeapon = getStore(`${storeKey}/speedAfterFireWeapon`, false);
+const passiveIds = getStore(`${storeKey}/passiveIds`, []);
 
 const compareList = getStore(`${storeKey}/compareList`, weapons.map(w => [w.name]));
 const sortMethod = getStore(`${storeKey}/sortMethod`, {
@@ -50,8 +51,7 @@ $: {
     mdef: $mdef,
 
     poisonTurns: $poisonTurns,
-    poisonAfterWeapon: $poisonAfterWeapon,
-    speedAfterFireWeapon: $speedAfterFireWeapon,
+    passiveIds: $passiveIds,
 
     fireResist: $fireResist,
     waterResist: $waterResist,
@@ -148,14 +148,14 @@ function deleteCompare(i) {
   <input type="number" bind:value={$lightningResist}>
   <span>中毒發生次數</span>
   <input type="number" bind:value={$poisonTurns}>
-  <label class="cspan">
-    <input type="checkbox" bind:checked={$poisonAfterWeapon}>
-    <span>使用武器後中毒（格蕾絲）</span>
-  </label>
-  <label class="cspan">
-    <input type="checkbox" bind:checked={$speedAfterFireWeapon}>
-    <span>使用火武器後加速（歌莉雅）</span>
-  </label>
+  {#each passive as p, i}
+    {#if currentPage === p.type}
+      <label class="cspan">
+        <input type="checkbox" bind:group={$passiveIds} value={i}>
+        <span>{p.name}</span>
+      </label>
+    {/if}
+  {/each}
 </div>
 
 <h2>Combo</h2>

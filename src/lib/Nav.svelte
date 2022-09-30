@@ -1,7 +1,5 @@
 <script>
-/* eslint-env browser */
-const match = location.pathname.match(/([^/.]*)(\.html)?$/);
-const page = !match[1] || match[1] === "index" ? "sword" : match[1];
+import {currentPage as page} from "./env.mjs";
 </script>
 
 <ul>

@@ -1,3 +1,5 @@
+import allPassive from "./passive.mjs";
+
 // NOTE: we use F++ instead of F
 const WEAPON_MOD = {
   F: 0.85,
@@ -15,16 +17,17 @@ const WEAPON_MOD = {
 export function simulate({
   atk, def, int, mdef, weapons, poisonTurns = 99, 
   fireResist, waterResist, poisonResist, lightningResist,
-  poisonAfterWeapon,
-  speedAfterFireWeapon
+  passiveIds
 }) {
+  const passive = allPassive.filter((p, i) => passiveIds.includes(i));
   const stages = [];
-  let state = {
+  const state = {
     atk,
     def,
     int,
     mdef,
     stance: 0,
+    totalHit: 0,
     buff: [],
     targetBuff: [],
 
@@ -33,17 +36,15 @@ export function simulate({
 
     poisonTurns,
 
-    poisonAfterWeapon,
-    speedAfterFireWeapon,
-
     fireResist,
     waterResist,
     poisonResist,
-    lightningResist
+    lightningResist,
+
+    passive
   };
   for (const weapon of weapons) {
     const result = calculateDamage(state, weapon);
-    state = result.state;
     stages.push(result);
   }
   const finalDamage = stages.reduce((o, s) => o + s.damage, 0);
@@ -83,40 +84,36 @@ function getPoisonDamage({poison, poisonTurns, poisonResist}) {
   return damage;
 }
 
+function calculatePassive(state, weapon, key) {
+  state.passive.forEach(p => p[key]?.(state, weapon));
+}
+
 function calculateDamage(state, weapon) {
-  const newState = {
-    ...state,
-    buff: [],
-    targetBuff: [],
-    poison: [],
-    cost: weapon.casting || weapon.cost
-  };
-  const hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
+  const oldPoisonDamage = getPoisonDamage(state);
+
+  state.cost = weapon.casting || weapon.cost;
+  state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
+  
   let damage = 0;
   const def = getDef(state, weapon);
-  if (hit) {
+  for (let i = 0; i < state.hit; i++) {
+    state.currentHit = i + 1;
+    state.totalHit++;
     let atk = getAtk(state, weapon);
     if (weapon.stance?.use === state.stance) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
     // FIXME: is it possible to have negative def?
-    damage = Math.max(atk - def, 1) * hit;
+    damage += Math.max(atk - def, 1);
+    if (state.lightning?.atk) {
+      damage += state.lightning.atk * (100 - state.lightningResist) / 100;
+    }
+    calculatePassive(state, weapon, "afterHit");
   }
 
-  if (hit) {
-    for (const b of state.buff) {
-      if (b.times > 1) {
-        newState.buff.push({...b, times: b.times - 1});
-      }
-    }
-    for (const b of state.targetBuff) {
-      if (b.times > 1) {
-        newState.targetBuff.push({...b, times: b.times - 1});
-      }
-    }
-  } else {
-    newState.buff.push(...state.buff);
-    newState.targetBuff.push(...state.targetBuff);
+  if (state.hit) {
+    state.buff = state.buff.map(b => ({...b, times: b.times - 1})).filter(b => b.times > 0);
+    state.targetBuff = state.targetBuff.map(b => ({...b, times: b.times - 1})).filter(b => b.times > 0);
   }
 
   if (weapon.trap) {
@@ -125,62 +122,51 @@ function calculateDamage(state, weapon) {
 
   if (weapon.fire?.atk) {
     damage += weapon.fire.atk * (100 - state.fireResist) / 100;
-    if (state.speedAfterFireWeapon) {
-      newState.cost -= 2;
-    }
   }
 
   if (weapon.water?.atk) {
     damage += weapon.water.atk * (100 - state.waterResist) / 100;
   }
 
-  if (hit && state.lightning?.atk) {
-    damage += state.lightning.atk * hit * (100 - state.lightningResist) / 100;
-  }
   if (weapon.lightning?.atk) {
     damage += weapon.lightning.atk * (100 - state.lightningResist) / 100;
     if (!state.lightning?.atk || weapon.lightning.time > state.lightning.time) {
-      newState.lightning = weapon.lightning;
+      state.lightning = weapon.lightning;
     }
   }
 
-  newState.poison.push(...state.poison);
   if (weapon.poison?.atk) {
-    newState.poison.push({
+    state.poison.push({
       atk: weapon.poison.atk,
       turn: weapon.poison.turn,
       bonus: 0
     });
   }
   if (weapon.poison?.bonus) {
-    for (const p of newState.poison) {
-      p.bonus = (p.bonus + 100) * (weapon.poison.bonus + 100) / 100 - 100;
-    }
-  }
-  if (hit && state.poisonAfterWeapon) {
-    // 格蕾斯
-    newState.poison.push({
-      atk: 300,
-      turn: 2,
-      bonus: 0
+    state.poison = state.poison.map(p => {
+      const newBonus = (p.bonus + 100) * (weapon.poison.bonus + 100) / 100 - 100;
+      return {...p, bonus: Math.min(newBonus, 200)};
     });
   }
-  damage += getPoisonDamage(newState) - getPoisonDamage(state);
 
   if (weapon.buff) {
-    newState.buff.push(...weapon.buff);
+    state.buff.push(...weapon.buff);
   }
   if (weapon.targetBuff) {
-    newState.targetBuff.push(...weapon.targetBuff);
+    state.targetBuff.push(...weapon.targetBuff);
   }
 
   if (weapon?.stance?.use === state.stance && weapon.stance.buff) {
-    newState.buff.push(...weapon.stance.buff);
+    state.buff.push(...weapon.stance.buff);
   }
 
   if (weapon?.stance?.gain != null) {
-    newState.stance = weapon.stance.gain;
+    state.stance = weapon.stance.gain;
   }
 
-  return {damage, state: newState, cost: newState.cost};
+  calculatePassive(state, weapon, "afterWeapon");
+
+  damage += getPoisonDamage(state) - oldPoisonDamage;
+
+  return {damage, cost: state.cost};
 }
