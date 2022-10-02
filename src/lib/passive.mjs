@@ -28,6 +28,10 @@ export default [
     afterWeapon: (state, weapon) => {
       if (weapon.fire?.atk) {
         state.cost -= 2;
+        if (state.targetBuff.every(b => !b.goriya)) {
+          state.targetBuff.push({injuryBonus: 10, times: 99, goriya: true});
+          state.targetBuff.push({fireResist: -10, times: 99, goriya: true});
+        }
       }
     }
   },

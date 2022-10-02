@@ -48,6 +48,13 @@ class State {
   getDef(weapon) {
     return getDef(this, weapon);
   }
+  getFireResist() {
+    return this.fireResist + this.targetBuff.reduce((output, b) => output + (b.fireResist || 0), 0);
+  }
+  getInjuryBonus() {
+    const bonus = this.targetBuff.reduce((output, b) => output + (b.injuryBonus || 0), 0);
+    return (bonus + 100) / 100;
+  }
 }
 
 export function simulate({
@@ -116,7 +123,7 @@ function calculateDamage(state, weapon) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
     // FIXME: is it possible to have negative def?
-    state.damage += Math.max(atk - def, 1);
+    state.damage += Math.max(atk - def, 1) * state.getInjuryBonus();
     if (state.lightning?.atk) {
       state.damage += state.lightning.atk * (100 - state.lightningResist) / 100;
     }
@@ -133,7 +140,7 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.fire?.atk) {
-    state.damage += weapon.fire.atk * (100 - state.fireResist) / 100;
+    state.damage += weapon.fire.atk * (100 - state.getFireResist()) / 100;
   }
 
   if (weapon.water?.atk) {
