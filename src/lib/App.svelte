@@ -165,7 +165,7 @@ function deleteCompare(i) {
   <span class="chead">Cost</span>
   <span class="chead">Damage</span>
   <span class="chead">CP</span>
-  <span></span>
+  <span class="operation"></span>
   {#each combos as weapon, i}
     <select bind:value={weapon}>
       {#each weapons as w}
@@ -223,12 +223,17 @@ function deleteCompare(i) {
   font-family: sans-serif;
   margin: 2em auto;
   max-width: 600px;
+  padding: 0 .6em;
 }
 :global(input), :global(button), :global(select) {
   font-size: .95em;
   font-family: inherit;
   padding: .3em .6em;
   vertical-align: middle;
+}
+:global(input[type=number]) {
+  width: 100%;
+  box-sizing: border-box;
 }
 .base-info {
   display: grid;
@@ -244,6 +249,14 @@ function deleteCompare(i) {
   align-items: center;
   gap: .2em;
   margin: 1em 0;
+}
+@media (max-width: 600px) {
+  .combo-table {
+    grid-template-columns: repeat(4, auto);
+  }
+  .operation {
+    grid-column-end: span 4;
+  }
 }
 .combo-table > * {
   padding: .3em .6em;
