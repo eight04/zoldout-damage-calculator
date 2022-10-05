@@ -115,6 +115,7 @@ function calculateDamage(state, weapon) {
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
   state.damage = 0;
   const def = getDef(state, weapon);
+  calculatePassive(state, weapon, "beforeWeapon");
   for (let i = 0; i < state.hit; i++) {
     state.currentHit = i + 1;
     state.totalHit++;

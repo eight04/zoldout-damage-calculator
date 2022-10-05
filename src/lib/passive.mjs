@@ -43,5 +43,32 @@ export default [
         state.damage += (900 - state.getDef({atkType: "magic"})) * 2;
       }
     }
+  },
+  {
+    name: "魔攻增加（西比拉）",
+    type: "wand",
+    beforeWeapon: (state, weapon) => {
+      if (weapon.casting >= 6 && state.hit) {
+        state.buff.push({bonus: 25, times: 1});
+      }
+    }
+  },
+  {
+    name: "生命回復（塔尼亞）",
+    type: "tome",
+    afterWeapon: (state, weapon) => {
+      if (!state.hit || weapon.atkType === "heal") {
+        state.damage += 360;
+      }
+    }
+  },
+  {
+    name: "加速（塔尼亞）",
+    type: "tome",
+    afterWeapon: (state, weapon) => {
+      if (!state.hit || weapon.atkType === "heal") {
+        state.cost--;
+      }
+    }
   }
 ];
