@@ -240,10 +240,25 @@ const weapons = [
     }
   },
   {
+    name: "流水法杖",
+    cost: 6,
+    casting: 4,
+    grade: 3,
+    atk: 0,
+    modLv: "B"
+  },
+  {
     name: "尤里走路",
     cost: 2,
     grade: 1,
     atk: 900
+  },
+  {
+    name: "奧義（莉伊）",
+    cost: 10,
+    casting: 10,
+    atk: 952,
+    modLv: "S"
   }
 ];
 
