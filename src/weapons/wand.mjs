@@ -263,6 +263,13 @@ const weapons = [
     casting: 10,
     atk: 952,
     modLv: "S"
+  },
+  {
+    name: "專武（西比拉）",
+    cost: 7,
+    casting: 7,
+    atk: 1000,
+    modLv: "SSS"
   }
 ];
 
