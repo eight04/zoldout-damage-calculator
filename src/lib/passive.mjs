@@ -39,7 +39,7 @@ export default [
     name: "額外傷害（尤里+泳裝伊蓮）",
     type: "wand",
     afterWeapon: (state, weapon) => {
-      if (weapon.water?.atk) {
+      if (weapon.water) {
         state.damage += (900 - state.getDef({atkType: "magic"})) * 2;
       }
     }

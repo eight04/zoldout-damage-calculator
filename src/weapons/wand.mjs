@@ -244,8 +244,12 @@ const weapons = [
     cost: 6,
     casting: 4,
     grade: 3,
-    atk: 0,
-    modLv: "B"
+    water: {
+      atk: 0,
+      modLv: "B",
+      modType: "int",
+      time: 0
+    }
   },
   {
     name: "尤里走路",

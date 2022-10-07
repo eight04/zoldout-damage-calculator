@@ -55,6 +55,9 @@ class State {
     const bonus = this.targetBuff.reduce((output, b) => output + (b.injuryBonus || 0), 0);
     return (bonus + 100) / 100;
   }
+  getWaterAtk({atk, modLv, modType}) {
+    return getAtk(this, {modType, modLv, atk});
+  }
 }
 
 export function simulate({
@@ -92,8 +95,7 @@ function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0
     int + buff.reduce((output, b) => output + (b.int || 0), 0) :
     atk + buff.reduce((output, b) => output + (b.atk || 0), 0);
   return (weaponAtk + (modLv ? charAtk * WEAPON_MOD[modLv] : 0))
-    * (bonus + 100) / 100
-    * buff.reduce((output, b) => output * (b.bonus ? (b.bonus + 100) / 100 : 1), 1);
+    * (bonus + 100) / 100;
 }
 
 function getPoisonDamage({poison, poisonTurns, poisonResist}) {
@@ -120,6 +122,7 @@ function calculateDamage(state, weapon) {
     state.currentHit = i + 1;
     state.totalHit++;
     let atk = getAtk(state, weapon);
+    atk *= state.buff.reduce((output, b) => output * (b.bonus ? (b.bonus + 100) / 100 : 1), 1);
     if (weapon.stance?.use === state.stance) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
@@ -144,8 +147,8 @@ function calculateDamage(state, weapon) {
     state.damage += weapon.fire.atk * (100 - state.getFireResist()) / 100;
   }
 
-  if (weapon.water?.atk) {
-    state.damage += weapon.water.atk * (100 - state.waterResist) / 100;
+  if (weapon.water) {
+    state.damage += state.getWaterAtk(weapon.water) * (100 - state.waterResist) / 100;
   }
 
   if (weapon.lightning?.atk) {

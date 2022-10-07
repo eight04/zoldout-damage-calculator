@@ -1,2 +1,2 @@
-var tome=function(){"use strict";return new tomeBeeba1Eb.A({target:document.body,props:{weapons:tomeBeeba1Eb.w,storeKey:"tome"}})}();
+var tome=function(){"use strict";return new tomeCe7048C6.A({target:document.body,props:{weapons:tomeCe7048C6.w,storeKey:"tome"}})}();
 //# sourceMappingURL=tome.js.map
