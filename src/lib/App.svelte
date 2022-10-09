@@ -12,19 +12,24 @@ export let weapons, storeKey;
 const NAME_TO_WEAPON = Object.fromEntries(weapons.map(w => [w.name, w]));
 
 const atk = getStore(`${storeKey}/atk`, 700);
-const def = getStore(`${storeKey}/def`, 200);
+const def = getStore(`comm/def`, 200);
 const int = getStore(`${storeKey}/int`, 700);
-const mdef = getStore(`${storeKey}/mdef`, 200);
+const mdef = getStore(`comm/mdef`, 200);
 
-const fireResist = getStore(`${storeKey}/fireResist`, 0);
-const waterResist = getStore(`${storeKey}/waterResist`, 0);
-const poisonResist = getStore(`${storeKey}/poisonResist`, 0);
-const lightningResist = getStore(`${storeKey}/lightningResist`, 0);
+const fireResist = getStore(`comm/fireResist`, 0);
+const waterResist = getStore(`comm/waterResist`, 0);
+const poisonResist = getStore(`comm/poisonResist`, 0);
+const lightningResist = getStore(`comm/lightningResist`, 0);
+
+const fire = getStore(`comm/fire`, false);
+const freeze = getStore(`comm/freeze`, false);
+const poison = getStore(`comm/poison`, false);
+const lightning = getStore(`comm/lightning`, false);
 
 const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
 const passiveIds = getStore(`${storeKey}/passiveIds`, []);
 
-const compareList = getStore(`${storeKey}/compareList`, weapons.map(w => [w.name]));
+const compareList = getStore(`${storeKey}/compareList`, []);
 const sortMethod = getStore(`${storeKey}/sortMethod`, {
   field: null,
   dir: 1
@@ -49,6 +54,11 @@ $: {
     def: $def,
     int: $int,
     mdef: $mdef,
+
+    fire: $fire,
+    freeze: $freeze,
+    poison: $poison,
+    lightning: $lightning,
 
     poisonTurns: $poisonTurns,
     passiveIds: $passiveIds,
@@ -123,6 +133,15 @@ function deleteCompare(i) {
   $compareList = $compareList;
 }
 
+function addAllToCompare() {
+  const set = new Set($compareList.map(c => c[0]));
+  for (const weapon of weapons) {
+    if (!set.has(weapon.name)) {
+      $compareList.push([weapon.name]);
+    }
+  }
+  $compareList = $compareList;
+}
 </script>
 
 <h1>Zold:Out Damage Calculator</h1>
@@ -146,6 +165,22 @@ function deleteCompare(i) {
   <input type="number" bind:value={$poisonResist}>
   <span>雷抗</span>
   <input type="number" bind:value={$lightningResist}>
+  <label class="cspan">
+    <input type="checkbox" bind:checked={$freeze}>
+    <span>敵人凍結</span>
+  </label>
+  <label class="cspan">
+    <input type="checkbox" bind:checked={$fire}>
+    <span>敵人著火</span>
+  </label>
+  <label class="cspan">
+    <input type="checkbox" bind:checked={$poison}>
+    <span>敵人中毒</span>
+  </label>
+  <label class="cspan">
+    <input type="checkbox" bind:checked={$lightning}>
+    <span>敵人觸電</span>
+  </label>
   <span>中毒發生次數</span>
   <input type="number" bind:value={$poisonTurns}>
   {#each passive as p, i}
@@ -198,6 +233,7 @@ function deleteCompare(i) {
 
 <h2>Compare</h2>
 
+<button on:click={addAllToCompare}>Add all weapons</button>
 <div class="compare-list">
   <SortButton field="name" text="Name" bind:method={$sortMethod} />
   <SortButton field="cost" text="Cost" bind:method={$sortMethod} />
