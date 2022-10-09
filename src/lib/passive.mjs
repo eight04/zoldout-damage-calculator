@@ -23,16 +23,37 @@ export default [
     }
   },
   {
+    name: "著火時額外傷害（艾娜）",
+    type: "bow",
+    afterHit: (state) => {
+      if (state.fire) {
+        state.damage += 360 * (100 - state.getFireResist()) / 100;
+      }
+    }
+  },
+  {
     name: "使用火武器後加速（歌莉雅）",
     type: "wand",
     afterWeapon: (state, weapon) => {
       if (weapon.fire?.atk) {
         state.cost -= 2;
-        if (state.targetBuff.every(b => !b.goriya)) {
-          state.targetBuff.push({injuryBonus: 10, times: 99, goriya: true});
-          state.targetBuff.push({fireResist: -10, times: 99, goriya: true});
-        }
       }
+    }
+  },
+  {
+    name: "著火時增傷、減抗（歌莉雅）",
+    type: "wand",
+    beforeWeapon: (state) => {
+      let b = state.targetBuff.find(b => b.id === "goriya1");
+      if (!b) {
+        b = {
+          id: "goriya1",
+          times: 99,
+        };
+        state.targetBuff.push(b);
+      }
+      b.injuryBonus = state.fire ? 10 : 0;
+      b.fireResist = state.fire ? -10 : 0;
     }
   },
   {
