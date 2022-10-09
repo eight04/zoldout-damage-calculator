@@ -723,7 +723,7 @@ Used by: 狼牙弓/狼牙大劍/生命滿溢
 <tr>
 <td>0.60</td>
 <td>普通4-2</td>
-<td>10破岩鳥喙/12精靈月桂樹木材</td>
+<td>6.73破岩鳥喙/12精靈月桂樹木材</td>
 </tr>
 
 <tr>
@@ -1546,13 +1546,13 @@ Used by: None
 
 </details> </td></tr>
 <tr><td>破岩鳥喙</td><td>
-<details> <summary>[0.50] [普通4-2] 10破岩鳥喙/12精靈月桂樹木材</summary>
+<details> <summary>[0.34] [普通4-2] 6.73破岩鳥喙/12精靈月桂樹木材</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 
 <tr>
-<td>0.50</td>
+<td>0.34</td>
 <td>普通4-2</td>
-<td>10破岩鳥喙/12精靈月桂樹木材</td>
+<td>6.73破岩鳥喙/12精靈月桂樹木材</td>
 </tr>
 
 <tr>

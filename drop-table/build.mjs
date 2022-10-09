@@ -1,4 +1,4 @@
-import {writeFile} from "fs/promises";
+import {writeFile, readFile} from "fs/promises";
 import gs from "google-spreadsheet";
 
 const doc = new gs.GoogleSpreadsheet("1CeTO-Bae2xNGrAtTo1zAb81joirxu4CGnrdVieXQbfU");
@@ -6,10 +6,8 @@ doc.useApiKey("AIzaSyBmF9PBdznx-Dpxa2YOWWK6gcThwPFpLDM");
 await doc.loadInfo();
 
 const stages = await loadStages(doc);
-await writeFile(new URL("stages.json", import.meta.url), JSON.stringify(stages, null, 2));
 
 const material = await loadMaterial(doc);
-await writeFile(new URL("material.json", import.meta.url), JSON.stringify(stages, null, 2));
 
 const items = new Map;
 
@@ -68,6 +66,12 @@ function dropsToLine(drops) {
 }
 
 async function loadStages(doc) {
+  try {
+    const s = await readFile(new URL("stages.json", import.meta.url), "utf8");
+    return JSON.parse(s);
+  } catch (err) {
+    // pass
+  }
   const sheet = doc.sheetsByTitle["素材"];
   await sheet.loadCells("A4:C");
 
@@ -99,6 +103,7 @@ async function loadStages(doc) {
 
     stages.push(stage);
   }
+  await writeFile(new URL("stages.json", import.meta.url), JSON.stringify(stages, null, 2));
 
   return stages;
 }
@@ -118,6 +123,7 @@ async function loadMaterial(doc) {
       result[mat].push(weapon);
     }
   }
+  await writeFile(new URL("material.json", import.meta.url), JSON.stringify(result, null, 2));
 
   return result;
 }
