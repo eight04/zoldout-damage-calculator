@@ -60,11 +60,38 @@ export default [
     buff: [{atk: 280, times: 1}]
   },
   {
+    name: "引燃火劍",
+    cost: 3,
+    grade: 2,
+    atk: 140,
+    modLv: "C",
+    fire: {
+      cond: state => state.fire,
+      atk: 520
+    }
+  },
+  {
+    name: "致毒曲刀",
+    cost: 4,
+    grade: 2,
+    atk: 300,
+    modLv: "C",
+    poison: {
+      cond: state => state.poison.length,
+      atk: 1100,
+      turn: 2
+    }
+  },
+  {
     name: "火羽骸蝶",
     cost: 4,
     grade: 4,
     atk: 510,
-    modLv: "A"
+    modLv: "A",
+    fire: {
+      atk: 400,
+      time: 5
+    }
   },
   {
     name: "重鐵",
@@ -83,6 +110,17 @@ export default [
       use: 2,
       gain: 0,
       bonus: 60
+    }
+  },
+  {
+    name: "閃燃焰劍",
+    cost: 4,
+    grade: 3,
+    atk: 330,
+    modLv: "B",
+    fire: {
+      cond: state => state.fire,
+      atk: 900
     }
   },
   {
@@ -121,7 +159,24 @@ export default [
     grade: 3,
     atk: 450,
     modLv: "S",
-    atkBonusOnFreeze: 25
+    passive: state => {
+      if (state.freeze) {
+        state.buff.push({bonus: 25, times: 1});
+        state.freeze = false;
+      }
+    }
+  },
+  {
+    name: "猛毒曲刀",
+    cost: 4,
+    grade: 3,
+    atk: 200,
+    modLv: "B",
+    poison: {
+      cond: state => state.poison.length,
+      atk: 1440,
+      turn: 2
+    }
   },
   {
     name: "巨型西瓜冰棒",
@@ -129,7 +184,17 @@ export default [
     grade: 4,
     atk: 50,
     modLv: "S",
-    atkBonusOnFreeze: 10
+  },
+  {
+    name: "巨型西瓜冰棒（凍結）",
+    cost: 4,
+    grade: 4,
+    water: {
+      atk: 50,
+      modLv: "S",
+      modType: "atk",
+      bonus: 10
+    }
   },
   {
     name: "動力能量劍",
@@ -150,6 +215,29 @@ export default [
     atk: 100,
     modLv: "E",
     buff: [{atk: 300, times: 99}]
+  },
+  {
+    name: "爆燃殆盡",
+    cost: 3,
+    grade: 4,
+    atk: 70,
+    modLv: "C",
+    fire: {
+      cond: state => state.fire,
+      atk: 880
+    }
+  },
+  {
+    name: "劇毒蟲皇",
+    cost: 4,
+    grade: 4,
+    atk: 200,
+    modLv: "B",
+    poison: {
+      cond: state => state.poison.length,
+      atk: 1800,
+      turn: 3
+    }
   },
   {
     name: "暗殺者之劍",
