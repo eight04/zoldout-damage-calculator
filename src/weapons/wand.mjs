@@ -262,7 +262,29 @@ const weapons = [
     cost: 10,
     casting: 10,
     atk: 952,
-    modLv: "S"
+    modLv: "S0"
+  },
+  {
+    name: "奧義（歌莉雅）",
+    cost: 6,
+    casting: 6,
+    atk: 1045,
+    modLv: "A0",
+    fire: {
+      atk: 1250,
+      time: 5
+    }
+  },
+  {
+    name: "奧義（歌莉雅）（地型）",
+    cost: 6,
+    casting: 6,
+    atk: 1045,
+    modLv: "A0",
+    fire: {
+      atk: 1250 + 20 * 90,
+      time: 20
+    }
   },
   {
     name: "專武（西比拉）",
