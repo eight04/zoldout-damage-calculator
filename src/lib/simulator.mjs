@@ -3,7 +3,6 @@ import allPassive from "./passive.mjs";
 // NOTE: we use F++ instead of F
 const WEAPON_MOD = {
   F: 0.85,
-  E0: 1, // 初始武器卡無法造出++
   E: 1.1,
   D: 1.35,
   C: 1.6,
@@ -13,11 +12,15 @@ const WEAPON_MOD = {
   SS: 2.6,
   SSS: 2.85, // FIXME: confirm this
 };
+for (const key in WEAPON_MOD) {
+  WEAPON_MOD[`${key}0`] = WEAPON_MOD[key] - 0.1;
+}
 
 class State {
   constructor({
     atk, def, int, mdef,
     fireResist, waterResist, poisonResist, lightningResist,
+    fire = false, freeze = false, poison = false,
     poisonTurns,
     passive
   }) {
@@ -42,8 +45,10 @@ class State {
     this.buff = [];
     this.targetBuff = [];
 
-    this.poison = [];
+    this.poison = poison ? [{atk: 0, turn: 99}] : [];
     this.lightning = {};
+    this.fire = fire;
+    this.freeze = freeze;
   }
   getDef(weapon) {
     return getDef(this, weapon);
@@ -55,8 +60,8 @@ class State {
     const bonus = this.targetBuff.reduce((output, b) => output + (b.injuryBonus || 0), 0);
     return (bonus + 100) / 100;
   }
-  getWaterAtk({atk, modLv, modType}) {
-    return getAtk(this, {modType, modLv, atk});
+  getWaterAtk(water) {
+    return getAtk(this, water);
   }
 }
 
@@ -101,6 +106,7 @@ function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0
 function getPoisonDamage({poison, poisonTurns, poisonResist}) {
   let damage = 0;
   for (const p of poison) {
+    if (!p.atk) continue;
     damage += p.atk * Math.min(p.turn, poisonTurns) / p.turn * (100 - poisonResist) / 100;
   }
   return damage;
@@ -117,6 +123,7 @@ function calculateDamage(state, weapon) {
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
   state.damage = 0;
   const def = getDef(state, weapon);
+  weapon.passive?.(state);
   calculatePassive(state, weapon, "beforeWeapon");
   for (let i = 0; i < state.hit; i++) {
     state.currentHit = i + 1;
@@ -143,33 +150,39 @@ function calculateDamage(state, weapon) {
     state.damage += Math.max(weapon.trap.atk - def, 1);
   }
 
-  if (weapon.fire?.atk) {
+  if (weapon.fire && (!weapon.fire.cond || weapon.fire.cond(state))) {
     state.damage += weapon.fire.atk * (100 - state.getFireResist()) / 100;
+    if (weapon.fire.time) {
+      state.fire = true;
+    }
   }
 
-  if (weapon.water) {
+  if (weapon.water && (!weapon.water.cond || weapon.water.cond(state))) {
     state.damage += state.getWaterAtk(weapon.water) * (100 - state.waterResist) / 100;
+    if (weapon.water.time) {
+      state.freeze = true;
+    }
   }
 
-  if (weapon.lightning?.atk) {
+  if (weapon.lightning && (!weapon.lightning.cond || weapon.lightning.cond(state))) {
     state.damage += weapon.lightning.atk * (100 - state.lightningResist) / 100;
     if (!state.lightning?.atk || weapon.lightning.time > state.lightning.time) {
       state.lightning = weapon.lightning;
     }
   }
 
-  if (weapon.poison?.atk) {
+  if (weapon.poison && (!weapon.poison.cond || weapon.poison.cond(state))) {
     state.poison.push({
       atk: weapon.poison.atk,
       turn: weapon.poison.turn,
       bonus: 0
     });
-  }
-  if (weapon.poison?.bonus) {
-    state.poison = state.poison.map(p => {
-      const newBonus = (p.bonus + 100) * (weapon.poison.bonus + 100) / 100 - 100;
-      return {...p, bonus: Math.min(newBonus, 200)};
-    });
+    if (weapon.poison.bonus) {
+      state.poison = state.poison.map(p => {
+        const newBonus = (p.bonus + 100) * (weapon.poison.bonus + 100) / 100 - 100;
+        return {...p, bonus: Math.min(newBonus, 200)};
+      });
+    }
   }
 
   if (weapon.buff) {
@@ -179,11 +192,11 @@ function calculateDamage(state, weapon) {
     state.targetBuff.push(...weapon.targetBuff);
   }
 
-  if (weapon?.stance?.use === state.stance && weapon.stance.buff) {
+  if (weapon.stance?.use === state.stance && weapon.stance.buff) {
     state.buff.push(...weapon.stance.buff);
   }
 
-  if (weapon?.stance?.gain != null) {
+  if (weapon.stance?.gain != null) {
     state.stance = weapon.stance.gain;
   }
 
