@@ -211,5 +211,22 @@ export default [
     atk: 100,
     modLv: "F",
     hit: 3
+  },
+  {
+    name: "狂鯊獵弓",
+    cost: 4,
+    grade: 4,
+    atk: 190,
+    modLv: "C",
+  },
+  {
+    name: "專武（艾娜）",
+    cost: 3,
+    grade: 3,
+    hit: 1,
+    fire: {
+      atk: 210,
+      modLv: "D"
+    }
   }
 ];

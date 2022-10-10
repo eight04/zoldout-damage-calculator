@@ -63,6 +63,9 @@ class State {
   getWaterAtk(water) {
     return getAtk(this, water);
   }
+  getFireAtk(options) {
+    return getAtk(this, options);
+  }
 }
 
 export function simulate({
@@ -151,7 +154,7 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.fire && (!weapon.fire.cond || weapon.fire.cond(state))) {
-    state.damage += weapon.fire.atk * (100 - state.getFireResist()) / 100;
+    state.damage += state.getFireAtk(weapon.fire) * (100 - state.getFireResist()) / 100;
     if (weapon.fire.time) {
       state.fire = true;
     }
