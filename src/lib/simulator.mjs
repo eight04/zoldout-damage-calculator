@@ -74,6 +74,7 @@ export function simulate({
   const passive = allPassive.filter((p, i) => passiveIds.includes(i));
   const stages = [];
   const state = new State({...options, passive});
+  calculatePassive(state, null, "beforeAll");
   for (const weapon of weapons) {
     const result = calculateDamage(state, weapon);
     stages.push(result);
