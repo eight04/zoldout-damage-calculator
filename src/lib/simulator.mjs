@@ -16,13 +16,19 @@ for (const key in WEAPON_MOD) {
   WEAPON_MOD[`${key}0`] = WEAPON_MOD[key] - 0.1;
 }
 
+function getWeaponMod(lv) {
+  if (typeof lv === "number") return lv;
+  if (WEAPON_MOD[lv]) return WEAPON_MOD[lv];
+  throw new Error(`unknown modLv: ${lv}`);
+}
+
 class State {
   constructor({
     hp,
     atk, def, int, mdef,
     fireResist, waterResist, poisonResist, lightningResist,
     fire = false, freeze = false, poison = false,
-    poisonTurns, stance = 0,
+    poisonTurns, stance = 0, maxTargets = 1,
     passive
   }) {
     this.hp = hp;
@@ -37,6 +43,7 @@ class State {
     this.lightningResist = lightningResist;
 
     this.poisonTurns = poisonTurns;
+    this.maxTargets = maxTargets;
     this.passive = passive;
 
     this.damage = 0;
@@ -46,6 +53,7 @@ class State {
     this.totalHit = 0;
     this.buff = [];
     this.targetBuff = [];
+    this.targets = 0;
 
     this.poison = poison ? [{atk: 0, turn: 99}] : [];
     this.lightning = {};
@@ -107,7 +115,7 @@ function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0
   const charAtk = modType === "int" ?
     int + buff.reduce((output, b) => output + (b.int || 0), 0) :
     atk + buff.reduce((output, b) => output + (b.atk || 0), 0);
-  return (weaponAtk + (modLv ? charAtk * WEAPON_MOD[modLv] : 0))
+  return (weaponAtk + (modLv ? charAtk * getWeaponMod(modLv) : 0))
     * (bonus + 100) / 100;
 }
 
@@ -130,6 +138,7 @@ function calculateDamage(state, weapon) {
   state.cost = weapon.casting || weapon.cost;
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
   state.damage = 0;
+  state.targets = Math.min(state.maxTargets, weapon.targets || 1);
   const def = getDef(state, weapon);
   weapon.passive?.(state);
   calculatePassive(state, weapon, "beforeWeapon");
@@ -143,9 +152,9 @@ function calculateDamage(state, weapon) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
     // FIXME: is it possible to have negative def?
-    state.damage += Math.max(atk - def, 1) * state.getInjuryBonus();
+    state.damage += Math.max(atk - def, 1) * state.getInjuryBonus() * state.targets;
     if (state.lightning?.atk) {
-      state.damage += state.lightning.atk * (100 - state.lightningResist) / 100;
+      state.damage += state.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;
     }
     calculatePassive(state, weapon, "afterHit");
   }
@@ -160,32 +169,35 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.fire && (!weapon.fire.cond || weapon.fire.cond(state))) {
-    state.damage += state.getFireAtk(weapon.fire) * (100 - state.getFireResist()) / 100;
+    state.damage += state.getFireAtk(weapon.fire) * (100 - state.getFireResist()) / 100 * state.targets;
     if (weapon.fire.time) {
       state.fire = true;
     }
   }
 
   if (weapon.water && (!weapon.water.cond || weapon.water.cond(state))) {
-    state.damage += state.getWaterAtk(weapon.water) * (100 - state.waterResist) / 100;
+    state.damage += state.getWaterAtk(weapon.water) * (100 - state.waterResist) / 100 * state.targets;
     if (weapon.water.time) {
       state.freeze = true;
     }
   }
 
   if (weapon.lightning && (!weapon.lightning.cond || weapon.lightning.cond(state))) {
-    state.damage += weapon.lightning.atk * (100 - state.lightningResist) / 100;
+    state.damage += weapon.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;
     if (!state.lightning?.atk || weapon.lightning.time > state.lightning.time) {
       state.lightning = weapon.lightning;
     }
   }
 
   if (weapon.poison && (!weapon.poison.cond || weapon.poison.cond(state))) {
-    state.poison.push({
-      atk: weapon.poison.atk,
-      turn: weapon.poison.turn,
-      bonus: 0
-    });
+    // FIXME: this goes wrong when multiple targets get poisoned and get hit by a single target weapon with poison bonus
+    for (let i = 0; i < state.targets; i++) {
+      state.poison.push({
+        atk: weapon.poison.atk,
+        turn: weapon.poison.turn,
+        bonus: 0
+      });
+    }
     if (weapon.poison.bonus) {
       state.poison = state.poison.map(p => {
         const newBonus = (p.bonus + 100) * (weapon.poison.bonus + 100) / 100 - 100;

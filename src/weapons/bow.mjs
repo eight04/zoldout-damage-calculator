@@ -142,6 +142,14 @@ export default [
     }
   },
   {
+    name: "射不準的玩具弓",
+    cost: 2,
+    grade: 3,
+    targets: 2,
+    atk: 120,
+    modLv: "E"
+  },
+  {
     name: "彈射陷阱弓MK2",
     cost: 5,
     grade: 3,
@@ -179,9 +187,17 @@ export default [
     atk: 500,
     modLv: "E",
     poison: {
-      // FIXME: poison scale by int
-      atk: 0
+      modLv: 1.3,
+      modType: "int",
+      turn: 3
     }
+  },
+  {
+    name: "隼之狩",
+    cost: 3,
+    grade: 4,
+    atk: 400,
+    modLv: "A"
   },
   {
     name: "實驗炸彈彈射器",
@@ -213,11 +229,23 @@ export default [
     hit: 3
   },
   {
+    name: "哨兵獵弓",
+    cost: 5,
+    grade: 3,
+    atk: 205,
+    modLv: "D",
+    trap: {
+      atk: 2000,
+      time: 20
+    }
+  },
+  {
     name: "狂鯊獵弓",
     cost: 4,
     grade: 4,
     atk: 190,
     modLv: "C",
+    targets: 99
   },
   {
     name: "專武（艾娜）",

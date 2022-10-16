@@ -136,6 +136,12 @@ export default [
     }
   },
   {
+    name: "報紙卷+12",
+    cost: 2,
+    atk: 200,
+    modLv: "D"
+  },
+  {
     name: "俠盜短劍",
     cost: 1,
     grade: 3,
@@ -215,6 +221,24 @@ export default [
     atk: 100,
     modLv: "E",
     buff: [{atk: 300, times: 99}]
+  },
+  {
+    name: "閃電萬雷大軍刀",
+    cost: 5,
+    grade: 4,
+    atk: 500,
+    modLv: "B"
+  },
+  {
+    name: "閃電萬雷大軍刀（觸電）",
+    cost: 5,
+    casting: 3,
+    grade: 4,
+    lightning: {
+      atk: 500,
+      modLv: "B",
+      modType: "str"
+    }
   },
   {
     name: "爆燃殆盡",

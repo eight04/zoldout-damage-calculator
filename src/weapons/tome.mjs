@@ -163,6 +163,15 @@ const weapons = [
     modType: "int",
   },
   {
+    name: "夏洛蒂自傳",
+    cost: 5,
+    grade: 3,
+    atk: 350,
+    atkType: "magic",
+    modLv: "C",
+    modType: "str"
+  },
+  {
     name: "神怒之書",
     cost: 4,
     grade: 3,

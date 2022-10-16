@@ -228,6 +228,18 @@ const weapons = [
     bonus: 80
   },
   {
+    name: "邪龍煉獄黑王杖",
+    cost: 7,
+    casting: 6,
+    atk: 200,
+    modLv: "S",
+    fire: {
+      // FIXME: find the correct mod
+      atk: 0,
+      time: 6
+    }
+  },
+  {
     name: "高壓閃電",
     cost: 8,
     casting: 5,
