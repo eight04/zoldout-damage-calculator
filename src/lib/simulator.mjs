@@ -18,12 +18,14 @@ for (const key in WEAPON_MOD) {
 
 class State {
   constructor({
+    hp,
     atk, def, int, mdef,
     fireResist, waterResist, poisonResist, lightningResist,
     fire = false, freeze = false, poison = false,
-    poisonTurns,
+    poisonTurns, stance = 0,
     passive
   }) {
+    this.hp = hp;
     this.atk = atk;
     this.def = def;
     this.int = int;
@@ -40,7 +42,7 @@ class State {
     this.damage = 0;
     this.hit = 0;
     this.totalHit = 0;
-    this.stance = 0;
+    this.stance = stance;
     this.totalHit = 0;
     this.buff = [];
     this.targetBuff = [];
@@ -81,11 +83,13 @@ export function simulate({
   }
   const finalDamage = stages.reduce((o, s) => o + s.damage, 0);
   const finalCost = stages.reduce((o, s) => o + s.cost, 0);
+  const executeCost = Math.ceil(state.hp / finalDamage) * finalCost;
   return {
     stages,
     summary: {
       damage: finalDamage,
       cost: finalCost,
+      executeCost,
       cp: finalDamage / finalCost
     }
   };
@@ -130,6 +134,7 @@ function calculateDamage(state, weapon) {
   weapon.passive?.(state);
   calculatePassive(state, weapon, "beforeWeapon");
   for (let i = 0; i < state.hit; i++) {
+    calculatePassive(state, weapon, "beforeHit");
     state.currentHit = i + 1;
     state.totalHit++;
     let atk = getAtk(state, weapon);

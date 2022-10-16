@@ -15,6 +15,7 @@ const atk = getStore(`${storeKey}/atk`, 700);
 const def = getStore(`comm/def`, 200);
 const int = getStore(`${storeKey}/int`, 700);
 const mdef = getStore(`comm/mdef`, 200);
+const hp = getStore(`comm/hp`, 2736);
 
 const fireResist = getStore(`comm/fireResist`, 0);
 const waterResist = getStore(`comm/waterResist`, 0);
@@ -27,6 +28,8 @@ const poison = getStore(`comm/poison`, false);
 const lightning = getStore(`comm/lightning`, false);
 
 const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
+const stance = getStore(`${storeKey}/stance`, 0);
+
 const passiveIds = getStore(`${storeKey}/passiveIds`, []);
 
 const compareList = getStore(`${storeKey}/compareList`, []);
@@ -50,6 +53,7 @@ let options = {};
 
 $: {
   options = {
+    hp: $hp,
     atk: $atk,
     def: $def,
     int: $int,
@@ -61,6 +65,8 @@ $: {
     lightning: $lightning,
 
     poisonTurns: $poisonTurns,
+    stance: $stance,
+
     passiveIds: $passiveIds,
 
     fireResist: $fireResist,
@@ -86,10 +92,8 @@ $: {
     });
     return {
       name: names.join("+"),
-      cost: result.summary.cost,
-      damage: result.summary.damage,
-      cp: result.summary.cp,
-      index: i
+      index: i,
+      ...result.summary
     };
   });
 }
@@ -149,6 +153,8 @@ function addAllToCompare() {
 <Nav />
 
 <div class="base-info">
+  <span>血量</span>
+  <input type="number" bind:value={$hp} class="cspan3">
   <span>力量</span>
   <input type="number" bind:value={$atk}>
   <span>防禦</span>
@@ -183,8 +189,10 @@ function addAllToCompare() {
   </label>
   <span>中毒發生次數</span>
   <input type="number" bind:value={$poisonTurns}>
+  <span>當前架勢</span>
+  <input type="number" bind:value={$stance}>
   {#each passive as p, i}
-    {#if currentPage === p.type}
+    {#if currentPage === p.type || p.type === "buff"}
       <label class="cspan">
         <input type="checkbox" bind:group={$passiveIds} value={i}>
         <span>{p.name}</span>
@@ -239,12 +247,14 @@ function addAllToCompare() {
   <SortButton field="cost" text="Cost" bind:method={$sortMethod} />
   <SortButton field="damage" text="Damage" bind:method={$sortMethod} />
   <SortButton field="cp" text="CP" bind:method={$sortMethod} />
+  <SortButton field="executeCost" text="斬殺Cost" bind:method={$sortMethod} />
   <span></span>
   {#each sortedCompareList as row}
     <span>{row.name}</span>
     <span>{row.cost}</span>
     <span>{row.damage.toFixed(0)}</span>
     <span>{row.cp.toFixed(0)}</span>
+    <span>{row.executeCost}</span>
     <button on:click={() => deleteCompare(row.index)}>x</button>
   {/each}
 </div>
@@ -304,10 +314,13 @@ function addAllToCompare() {
 .cspan {
   grid-column-end: span 2;
 }
+.cspan3 {
+  grid-column-end: span 3;
+}
 .compare-list {
   width: fit-content;
   display: grid;
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(6, auto);
   align-items: center;
   gap: .2em;
   margin: 1em 0;
