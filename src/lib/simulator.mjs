@@ -76,6 +76,9 @@ class State {
   getFireAtk(options) {
     return getAtk(this, options);
   }
+  getLightningAtk(options) {
+    return getAtk(this, options);
+  }
 }
 
 export function simulate({
@@ -183,9 +186,11 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.lightning && (!weapon.lightning.cond || weapon.lightning.cond(state))) {
-    state.damage += weapon.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;
-    if (!state.lightning?.atk || weapon.lightning.time > state.lightning.time) {
-      state.lightning = weapon.lightning;
+    const atk = state.getLightningAtk(weapon.lightning);
+    state.damage += atk * (100 - state.lightningResist) / 100 * state.targets;
+    if (!state.lightning.atk || weapon.lightning.time > state.lightning.time) {
+      state.lightning.atk = atk;
+      state.lightning.time = weapon.lightning.time;
     }
   }
 

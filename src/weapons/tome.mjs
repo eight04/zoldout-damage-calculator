@@ -195,10 +195,11 @@ const weapons = [
     atkType: "magic",
     modLv: "E",
     modType: "str",
-    // fire: {
-    //   FIXME: find the correct mod
-    //   modLv: "?"
-    // }
+    fire: {
+      modLv: 1.31,
+      modType: "int",
+      time: 5
+    }
   },
   {
     name: "生命滿溢",

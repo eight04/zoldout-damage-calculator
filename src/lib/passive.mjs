@@ -97,7 +97,7 @@ export default [
     name: "加速（塔尼亞）",
     type: "tome",
     afterWeapon: (state, weapon) => {
-      if (!state.hit || weapon.atkType === "heal") {
+      if (!state.hit && weapon.buff || weapon.atkType === "heal") {
         state.cost--;
       }
     }
