@@ -165,7 +165,7 @@ export default [
     grade: 3,
     atk: 450,
     modLv: "S",
-    passive: state => {
+    beforeWeapon: state => {
       if (state.freeze) {
         state.buff.push({bonus: 25, times: 1});
         state.freeze = false;

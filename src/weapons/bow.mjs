@@ -251,10 +251,26 @@ export default [
     name: "專武（艾娜）",
     cost: 3,
     grade: 3,
-    hit: 1,
-    fire: {
-      atk: 210,
-      modLv: "D"
+    atk: 210,
+    atkType: "fire",
+    modLv: "D"
+  },
+  {
+    name: "奧義（格蕾絲）",
+    cost: 7,
+    atk: 285,
+    modLv: "B0",
+    poison: {
+      atk: 1440,
+      turn: 3,
+      extend: 2
     }
+  },
+  {
+    name: "奧義（艾莉諾拉）",
+    cost: 6,
+    atk: 240,
+    modLv: "E",
+    hit: 6
   }
 ];

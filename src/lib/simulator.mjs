@@ -169,6 +169,7 @@ function getPoisonDamage({poison, poisonTurns, poisonResist}) {
 
 function calculatePassive(state, weapon, key) {
   state.passive.forEach(p => p[key]?.(state, weapon));
+  weapon?.[key]?.(state);
 }
 
 function calculateDamage(state, weapon) {
@@ -180,7 +181,6 @@ function calculateDamage(state, weapon) {
   state.targets = Math.min(state.maxTargets, weapon.targets || 1);
   const def = getDef(state, weapon);
   const resist = getResist(state, weapon);
-  weapon.passive?.(state);
   calculatePassive(state, weapon, "beforeWeapon");
   for (let i = 0; i < state.hit; i++) {
     calculatePassive(state, weapon, "beforeHit");
