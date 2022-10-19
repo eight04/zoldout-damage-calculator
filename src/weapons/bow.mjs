@@ -280,5 +280,15 @@ export default [
     modLv: "C",
     hit: 2,
     targetBuff: [{def: -150, times: 99}]
+  },
+  {
+    name: "奧義（艾娜）",
+    cost: 5,
+    atk: 579,
+    modLv: "A",
+    fire: {
+      atk: 1080,
+      time: 6
+    }
   }
 ];
