@@ -301,5 +301,27 @@ export default [
     grade: 4,
     atk: 420,
     modLv: "A"
+  },
+  {
+    name: "奧義（夏洛蒂）",
+    cost: 5,
+    atk: 2022,
+    modLv: "Ex0"
+  },
+  {
+    name: "奧義（夏洛蒂氣球）",
+    cost: 2,
+    atk: 0,
+    atkType: "magic",
+    modLv: "C0",
+    modType: "int",
+    hit: 2
+  },
+  {
+    name: "奧義（夏洛蒂圖騰）（單次）",
+    cost: 0,
+    atk: 700,
+    // NOTE: this get buffed by bonus
+    atkType: "fire"
   }
 ];

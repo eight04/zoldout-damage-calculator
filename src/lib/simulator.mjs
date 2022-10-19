@@ -64,8 +64,21 @@ class State {
   getDef(weapon) {
     return getDef(this, weapon);
   }
+  getResist(key) {
+    const value = this[key] + this.targetBuff.reduce((output, b) => output + (b[key] || 0), 0);
+    return (100 - value) / 100;
+  }
   getFireResist() {
-    return this.fireResist + this.targetBuff.reduce((output, b) => output + (b.fireResist || 0), 0);
+    return this.getResist("fireResist");
+  }
+  getWaterResist() {
+    return this.getResist("waterResist");
+  }
+  getPoisonResist() {
+    return this.getResist("poisonResist");
+  }
+  getLightningResist() {
+    return this.getResist("lightningResist");
   }
   getInjuryBonus() {
     const bonus = this.targetBuff.reduce((output, b) => output + (b.injuryBonus || 0), 0);
@@ -115,7 +128,26 @@ function getDef({def, mdef, targetBuff: buff}, {atkType}) {
   if (atkType === "magic") {
     return mdef + buff.reduce((output, b) => output + (b.mdef || 0), 0);
   }
+  if (atkType === "water" || atkType === "fire" || atkType === "poison" || atkType === "lightning") {
+    return 0;
+  }
   return def + buff.reduce((output, b) => output + (b.def || 0), 0);
+}
+
+function getResist(state, {atkType}) {
+  if (atkType === "fire") {
+    return state.getFireResist();
+  }
+  if (atkType === "water") {
+    return state.getWaterResist();
+  }
+  if (atkType === "poison") {
+    return state.getPoisonResist();
+  }
+  if (atkType === "lightning") {
+    return state.getLightningResist();
+  }
+  return 1;
 }
 
 function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0}) {
@@ -147,6 +179,7 @@ function calculateDamage(state, weapon) {
   state.damage = 0;
   state.targets = Math.min(state.maxTargets, weapon.targets || 1);
   const def = getDef(state, weapon);
+  const resist = getResist(state, weapon);
   weapon.passive?.(state);
   calculatePassive(state, weapon, "beforeWeapon");
   for (let i = 0; i < state.hit; i++) {
@@ -159,7 +192,7 @@ function calculateDamage(state, weapon) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
     // FIXME: is it possible to have negative def?
-    state.damage += Math.max(atk - def, 1) * state.getInjuryBonus() * state.targets;
+    state.damage += Math.max(atk - def, 1) * resist * state.getInjuryBonus() * state.targets;
     if (state.lightning?.atk) {
       state.damage += state.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;
     }
@@ -176,7 +209,7 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.fire && (!weapon.fire.cond || weapon.fire.cond(state))) {
-    state.damage += state.getFireAtk(weapon.fire) * (100 - state.getFireResist()) / 100 * state.targets;
+    state.damage += state.getFireAtk(weapon.fire) * state.getFireResist() * state.targets;
     if (weapon.fire.time) {
       state.fire = true;
     }

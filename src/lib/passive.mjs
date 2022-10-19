@@ -34,10 +34,10 @@ export default [
     type: "bow",
     afterHit: (state) => {
       if (state.fire) {
-        state.damage += 360 * (100 - state.getFireResist()) / 100;
+        state.damage += 360 * state.getFireResist();
       } else {
         state.fire = true;
-        state.damage += 540 * (100 - state.getFireResist()) / 100;
+        state.damage += 540 * state.getFireResist();
       }
     }
   },
