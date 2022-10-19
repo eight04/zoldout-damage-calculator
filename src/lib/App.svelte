@@ -9,6 +9,11 @@ import passive from "./passive.mjs";
 
 export let weapons, storeKey;
 
+weapons.unshift({
+  name: "移動",
+  cost: currentPage === "sword" ? 1 : 2
+});
+
 const NAME_TO_WEAPON = Object.fromEntries(weapons.map(w => [w.name, w]));
 
 const atk = getStore(`${storeKey}/atk`, 700);

@@ -10,7 +10,8 @@ const WEAPON_MOD = {
   A: 2.1,
   S: 2.35,
   SS: 2.6,
-  SSS: 2.85, // FIXME: confirm this
+  SSS: 2.85,
+  Ex: 3.1
 };
 for (const key in WEAPON_MOD) {
   WEAPON_MOD[`${key}0`] = WEAPON_MOD[key] - 0.1;
@@ -77,6 +78,9 @@ class State {
     return getAtk(this, options);
   }
   getLightningAtk(options) {
+    return getAtk(this, options);
+  }
+  getPoisonAtk(options) {
     return getAtk(this, options);
   }
 }
@@ -198,7 +202,7 @@ function calculateDamage(state, weapon) {
     // FIXME: this goes wrong when multiple targets get poisoned and get hit by a single target weapon with poison bonus
     for (let i = 0; i < state.targets; i++) {
       state.poison.push({
-        atk: weapon.poison.atk,
+        atk: state.getPoisonAtk(weapon.poison),
         turn: weapon.poison.turn,
         bonus: 0
       });
