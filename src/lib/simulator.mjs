@@ -96,6 +96,9 @@ class State {
   getPoisonAtk(options) {
     return getAtk(this, options);
   }
+  processWeapon(weapon) {
+    return processWeapon(this, weapon);
+  }
 }
 
 export function simulate({
@@ -125,13 +128,13 @@ export function simulate({
 
 function getDef({def, mdef, targetBuff: buff}, {atkType}) {
   if (atkType === "heal") return 0;
-  if (atkType === "magic") {
-    return mdef + buff.reduce((output, b) => output + (b.mdef || 0), 0);
-  }
   if (atkType === "water" || atkType === "fire" || atkType === "poison" || atkType === "lightning") {
     return 0;
   }
-  return def + buff.reduce((output, b) => output + (b.def || 0), 0);
+  if (atkType === "magic") {
+    return Math.max(mdef + buff.reduce((output, b) => output + (b.mdef || 0), 0), 0);
+  }
+  return Math.max(def + buff.reduce((output, b) => output + (b.def || 0), 0), 0);
 }
 
 function getResist(state, {atkType}) {
@@ -172,9 +175,7 @@ function calculatePassive(state, weapon, key) {
   weapon?.[key]?.(state);
 }
 
-function calculateDamage(state, weapon) {
-  const oldPoisonDamage = getPoisonDamage(state);
-
+function processWeapon(state, weapon) {
   state.cost = weapon.casting || weapon.cost;
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
   state.damage = 0;
@@ -249,14 +250,14 @@ function calculateDamage(state, weapon) {
   }
 
   if (weapon.buff) {
-    state.buff.push(...weapon.buff);
+    addBuff(state.buff, weapon.buff);
   }
   if (weapon.targetBuff) {
-    state.targetBuff.push(...weapon.targetBuff);
+    addBuff(state.targetBuff, weapon.targetBuff);
   }
 
   if (weapon.stance?.use === state.stance && weapon.stance.buff) {
-    state.buff.push(...weapon.stance.buff);
+    addBuff(state.buff, weapon.stance.buff);
   }
 
   if (weapon.stance?.gain != null) {
@@ -264,8 +265,22 @@ function calculateDamage(state, weapon) {
   }
 
   calculatePassive(state, weapon, "afterWeapon");
+}
 
+function addBuff(buffs, newBuffs) {
+  const ids = new Map(buffs.map((b, i) => [b.id, i]));
+  for (const b of newBuffs) {
+    if (b.id && ids.has(b.id)) {
+      buffs[ids.get(b.id)] = b;
+    } else {
+      buffs.push(b);
+    }
+  }
+}
+
+function calculateDamage(state, weapon) {
+  const oldPoisonDamage = getPoisonDamage(state);
+  processWeapon(state, weapon);
   state.damage += getPoisonDamage(state) - oldPoisonDamage;
-
   return {damage: state.damage, cost: state.cost};
 }

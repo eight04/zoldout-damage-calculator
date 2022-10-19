@@ -103,7 +103,7 @@ export default [
     grade: 3,
     atk: 80,
     modLv:"D",
-    targetBuff: [{def: -100, times: 99}],
+    targetBuff: [{id: "heavyBomb", def: -100, times: 99}],
   },
   {
     name: "元素獵者",
@@ -163,7 +163,7 @@ export default [
     grade: 3,
     atk: 165,
     modLv: "C",
-    targetBuff: [{def: -100, times: 99}]
+    targetBuff: [{id: "elfForest", def: -100, times: 99}]
   },
   {
     name: "熱帶魚槍",
@@ -171,7 +171,7 @@ export default [
     grade: 4,
     atk: 220,
     modLv: "D",
-    targetBuff: [{def: -150, times: 99}]
+    targetBuff: [{id: "tropicalFish", def: -150, times: 99}]
   },
   {
     name: "鐵輪鋼力弓",
@@ -270,7 +270,15 @@ export default [
     name: "奧義（艾莉諾拉）",
     cost: 6,
     atk: 240,
-    modLv: "E",
+    modLv: "E0",
     hit: 6
+  }, 
+  {
+    name: "奧義（菲恩）",
+    cost: 2,
+    atk: 330,
+    modLv: "C",
+    hit: 2,
+    targetBuff: [{def: -150, times: 99}]
   }
 ];

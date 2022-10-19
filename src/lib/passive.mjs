@@ -36,6 +36,37 @@ export default [
     }
   },
   {
+    name: "製造虛影（菲恩）",
+    type: "bow",
+    beforeAll: state => {
+      state.moves = 0;
+      state.isShadow = false;
+    },
+    afterWeapon: (state, weapon) => {
+      if (weapon.name === "移動") {
+        state.moves++;
+        return;
+      }
+      if (state.isShadow) return;
+
+      let {atk, buff, cost, damage} = state;
+      state.isShadow = true;
+      state.atk = 1047;
+      state.buff = [];
+      for (let i = 0; i < state.moves; i++) {
+        // FIXME: does shadow share the same total hit with fein?
+        // FIXME: doesn't work with stance
+        state.processWeapon(weapon);
+        damage += state.damage;
+      }
+      state.atk = atk;
+      state.buff = buff;
+      state.cost = cost;
+      state.isShadow = false;
+      state.damage = damage;
+    }
+  },
+  {
     name: "傷害後點燃或額外傷害（艾娜）",
     type: "bow",
     afterHit: (state) => {
