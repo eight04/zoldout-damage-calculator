@@ -240,6 +240,18 @@ const weapons = [
     }
   },
   {
+    name: "流水法杖",
+    cost: 6,
+    casting: 4,
+    grade: 3,
+    water: {
+      atk: 0,
+      modLv: "B",
+      modType: "int",
+      time: 0
+    }
+  },
+  {
     name: "高壓閃電",
     cost: 8,
     casting: 5,
@@ -252,16 +264,12 @@ const weapons = [
     }
   },
   {
-    name: "流水法杖",
-    cost: 6,
-    casting: 4,
-    grade: 3,
-    water: {
-      atk: 0,
-      modLv: "B",
-      modType: "int",
-      time: 0
-    }
+    name: "衛兵法杖",
+    cost: 10,
+    casting: 7,
+    grade: 4,
+    atk: 742,
+    modLv: "A"
   },
   {
     name: "尤里走路",

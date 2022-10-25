@@ -117,6 +117,7 @@ const weapons = [
     atkType: "heal",
     modLv: "F",
     modType: "int",
+    targets: 99
   },
   {
     name: "雷電蜂",
@@ -178,6 +179,14 @@ const weapons = [
     buff: [{bonus: 35, times: 1}]
   },
   {
+    name: "航海指南",
+    cost: 4,
+    atk: 220,
+    atkType: "heal",
+    modLv: "C",
+    modType: "int"
+  },
+  {
     name: "刨冰食用指南",
     cost: 4,
     grade: 4,
@@ -200,6 +209,12 @@ const weapons = [
       modType: "int",
       time: 5
     }
+  },
+  {
+    name: "眾神之怒",
+    cost: 3,
+    grade: 4,
+    buff: [{bonus: 30, times: 1}]
   },
   {
     name: "生命滿溢",
@@ -225,6 +240,16 @@ const weapons = [
     grade: 2,
     buff: [{int: 400, times: 99}]
   },
+  {
+    name: "腥紅海鯊後援團守則",
+    cost: 7,
+    grade: 4,
+    atk: 280,
+    atkType: "heal",
+    modLv: "C",
+    modType: "int",
+    targets: 99
+  }
 ];
 
 export default weapons;

@@ -285,6 +285,16 @@ export default [
     bonus: 50
   },
   {
+    name: "海盜彎刀",
+    cost: 3,
+    grade: 3,
+    atk: 460,
+    modLv: "D",
+    stance: {
+      gain: 1
+    }
+  },
+  {
     name: "結晶神聖劍",
     cost: 4,
     grade: 4,
@@ -301,6 +311,60 @@ export default [
     grade: 4,
     atk: 420,
     modLv: "A"
+  },
+  {
+    name: "破滅寒冰（凍結）",
+    cost: 4,
+    grade: 4,
+    atk: 420,
+    atkType: "water",
+    modLv: "A"
+  },
+  {
+    name: "巨鯨之息",
+    cost: 5,
+    grade: 3,
+    atk: 233,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int"
+  },
+  {
+    name: "巨鯨之息（一式）",
+    cost: 4,
+    grade: 3,
+    atk: 233,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int",
+    stance: {
+      gain: 2
+    }
+  },
+  {
+    name: "重騎兵之劍",
+    cost: 5,
+    grade: 4,
+    atk: 380,
+    modLv: "S"
+  },
+  {
+    name: "重騎兵之劍（防守）",
+    cost: 5,
+    grade: 4,
+    atk: 380,
+    modLv: "S",
+    bonus: 40
+  },
+  {
+    name: "大商會特製杖中劍",
+    cost: 2,
+    grade: 3,
+    atk: 262,
+    modLv: "F",
+    stance: {
+      gain: 1
+    }
   },
   {
     name: "奧義（夏洛蒂）",

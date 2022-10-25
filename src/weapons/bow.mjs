@@ -221,6 +221,21 @@ export default [
     modLv: "A"
   },
   {
+    name: "超性能瞄準儀",
+    cost: 3,
+    grade: 4,
+    atk: 300,
+    modLv: "C"
+  },
+  {
+    name: "超性能瞄準儀（毒、電）",
+    cost: 3,
+    grade: 4,
+    atk: 300,
+    modLv: "C",
+    bonus: 30
+  },
+  {
     name: "狂暴追獵",
     cost: 4,
     grade: 4,
