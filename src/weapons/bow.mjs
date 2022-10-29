@@ -114,6 +114,13 @@ export default [
     targetBuff: [{elementResist: -10, times: 99}]
   },
   {
+    name: "驚嚇小精靈",
+    cost: 5,
+    grade: 3,
+    atk: 50,
+    modLv: "C"
+  },
+  {
     name: "碧海旋螺弓",
     cost: 3,
     grade: 3,

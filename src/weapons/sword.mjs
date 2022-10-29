@@ -113,6 +113,22 @@ export default [
     }
   },
   {
+    name: "搗蛋南瓜君",
+    cost: 3,
+    grade: 3,
+    atk: 305,
+    modLv: "E",
+    stance: {
+      use: 1,
+      gain: 2,
+    },
+    poison: {
+      cond: state => state.stance === 1,
+      atk: 750,
+      turn: 1
+    }
+  },
+  {
     name: "閃燃焰劍",
     cost: 4,
     grade: 3,
