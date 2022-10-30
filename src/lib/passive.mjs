@@ -7,6 +7,13 @@ export default [
     }
   },
   {
+    name: "攻擊力增加（夏洛蒂）",
+    type: "sword",
+    beforeAll: state => {
+      state.buff.push({bonus: 45, times: 99});
+    }
+  },
+  {
     name: "傷害後攻擊增加（艾莉諾拉）",
     type: "bow",
     afterHit: state => {

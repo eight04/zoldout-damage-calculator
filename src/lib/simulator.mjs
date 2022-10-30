@@ -192,7 +192,6 @@ function processWeapon(state, weapon) {
     if (weapon.stance?.use === state.stance) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
-    // FIXME: is it possible to have negative def?
     state.damage += Math.max(atk - def, 1) * resist * state.getInjuryBonus() * state.targets;
     if (state.lightning?.atk) {
       state.damage += state.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;

@@ -373,6 +373,17 @@ export default [
     bonus: 40
   },
   {
+    name: "海鯊大劍",
+    cost: 7,
+    grade: 4,
+    atk: 777,
+    modLv: "SS",
+    stance: {
+      use: 2,
+      bonus: 50
+    }
+  },
+  {
     name: "大商會特製杖中劍",
     cost: 2,
     grade: 3,
