@@ -27,16 +27,30 @@ for (const list of items.values()) {
   list.sort((a, b) => b.rate - a.rate);
 }
 
-const goodsInEvent = [...items.entries()].filter(([, list]) => /普通/.test(list[0].stage.name));
-const goodsTable = goodsInEvent.map(([item, list]) => [item, list[0].stage.name, dropsToLine( list[0].stage.drops)]);
-goodsTable.unshift(["素材", "關卡", "掉落"]);
+const sortedItems = [...items.entries()]
+  .map(([name, list]) => ({name, list}))
+  .sort((a, b) => getDifficulty(a.list[0].stage.name) - getDifficulty(b.list[0].stage.name));
 
 await writeFile(new URL("README.md", import.meta.url), `
 # Zold:Out Drop Table (主線[普通]體力減半)
 
-<table>
-${goodsInEvent.map(([item, list]) => 
-  `<tr><td>${item}</td><td>
+${drawTable(sortedItems)}
+`);
+
+function getDifficulty(s) {
+  if (/普通/.test(s)) {
+    return 0;
+  }
+  if (/困難/.test(s)) {
+    return 1;
+  }
+  return 2;
+}
+
+function drawTable(items) {
+  return `<table>
+${items.map(({name, list}) => 
+  `<tr><td>${name}</td><td>
 <details> <summary>[${list[0].rate.toFixed(2)}] [${list[0].stage.name}] ${dropsToLine(list[0].stage.drops)}</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 ${list.map(l => `
@@ -46,11 +60,11 @@ ${list.map(l => `
 <td>${dropsToLine(l.stage.drops)}</td>
 </tr>`).join("\n")}
 </table>
-Used by: ${material[item] ? material[item].join("/") : "None"}
+Used by: ${material[name] ? material[name].join("/") : "None"}
 
 </details> </td></tr>`).join("\n")}
-</table>
-`);
+</table>`;
+}
 
 function aToIndex(s) {
   s = s.toLowerCase();
