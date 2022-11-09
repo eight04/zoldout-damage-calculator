@@ -98,6 +98,13 @@ export default [
     modLv: "B"
   },
   {
+    name: "騷靈之弓",
+    cost: 4,
+    grade: 3,
+    atk: 40,
+    modLv: "F",
+  },
+  {
     name: "重型炸彈弓",
     cost: 5,
     grade: 3,
