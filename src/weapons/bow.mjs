@@ -156,6 +156,17 @@ export default [
     }
   },
   {
+    name: "白夜禮物派送器",
+    cost: 5,
+    grade: 3,
+    trap: {
+      water: {
+        atk: 2100,
+        time: 6
+      }
+    }
+  },
+  {
     name: "射不準的玩具弓",
     cost: 2,
     grade: 3,

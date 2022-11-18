@@ -9,7 +9,8 @@ const weapons = [
     fire: {
       atk: 150,
       time: 6
-    }
+    },
+    range: "middle"
   },
   {
     name: "木製法杖",
@@ -17,6 +18,7 @@ const weapons = [
     grade: 1,
     atk: 100,
     modLv: "B",
+    range: "middle"
   },
   {
     name: "初等暴風法杖",
@@ -24,7 +26,8 @@ const weapons = [
     casting: 4,
     grade: 1,
     atk: 286,
-    modLv: "F"
+    modLv: "F",
+    range: "large",
   },
   {
     name: "初等閃電法杖",
@@ -32,7 +35,8 @@ const weapons = [
     casting: 5,
     grade: 1,
     atk: 480,
-    modLv: "A"
+    modLv: "A",
+    range: "small"
   },
   {
     name: "初等冰霜法杖",
@@ -44,14 +48,16 @@ const weapons = [
     water: {
       atk: 450,
       time: 5
-    }
+    },
+    range: "middle"
   },
   {
     name: "驅散法杖",
     cost: 6,
     grade: 1,
     atk: 280,
-    modLv: "B"
+    modLv: "B",
+    range: "small"
   },
   {
     name: "火焰法杖",
@@ -63,20 +69,23 @@ const weapons = [
     fire: {
       atk: 400,
       time: 5
-    }
+    },
+    range: "middle"
   },
   {
     name: "力量強化杖",
     cost: 3,
     casting: 3,
     grade: 2,
-    buff: [{atk: 200, times: 99}]
+    buff: [{atk: 200, times: 99}],
+    range: "nearSmall"
   },
   {
     name: "初級魔法凝聚",
     cost: 3,
     grade: 2,
-    buff: [{bonus: 10, times: 1}]
+    buff: [{bonus: 10, times: 1}],
+    range: "single"
   },
   {
     name: "暴風法杖",
@@ -85,6 +94,7 @@ const weapons = [
     grade: 3,
     atk: 200,
     modLv: "D",
+    range: "large",
   },
   {
     name: "冰霜法杖",
@@ -96,7 +106,8 @@ const weapons = [
     water: {
       atk: 760,
       time: 5
-    }
+    },
+    range: "middle",
   },
   {
     name: "橡木法杖",
@@ -104,6 +115,7 @@ const weapons = [
     grade: 2,
     atk: 392,
     modLv: "D",
+    range: "middle",
   },
   {
     name: "閃電法杖",
@@ -115,14 +127,16 @@ const weapons = [
     lightning: {
       atk: 150,
       time: 6
-    }
+    },
+    range: "small",
   },
   {
     name: "超級力量強化杖",
     cost: 4,
     casting: 4,
     grade: 3,
-    buff: [{atk: 350, times: 99}]
+    buff: [{atk: 350, times: 99}],
+    range: "nearSmall",
   },
   {
     name: "小雞閃光杖",
@@ -131,6 +145,7 @@ const weapons = [
     grade: 2,
     atk: 100,
     modLv: "F",
+    range: "small",
   },
   {
     name: "骸蝶魅影",
@@ -138,7 +153,8 @@ const weapons = [
     casting: 10,
     grade: 4,
     atk: 1340,
-    modLv: "SSS"
+    modLv: "SSS",
+    range: "middle",
   },
   {
     name: "暗影杖",
@@ -147,7 +163,8 @@ const weapons = [
     grade: 2,
     atk: 450,
     modLv: "S",
-    targetBuff: [{mdef: -150, times: 99}]
+    targetBuff: [{mdef: -150, times: 99}],
+    range: "middle",
   },
   {
     name: "灼熱日冕",
@@ -159,7 +176,8 @@ const weapons = [
     fire: {
       atk: 700,
       time: 5
-    }
+    },
+    range: "middle",
   },
   {
     name: "碧空颶風",
@@ -167,7 +185,8 @@ const weapons = [
     casting: 4,
     grade: 4,
     atk: 120,
-    modLv: "C"
+    modLv: "C",
+    range: "large",
   },
   {
     name: "閃光法杖",
@@ -176,12 +195,27 @@ const weapons = [
     grade: 3,
     atk: 150,
     modLv: "C",
+    range: "small",
+  },
+  {
+    name: "冰雕魔杖",
+    cost: 5,
+    casting: 4,
+    grade: 3,
+    atk: 65,
+    modLv: "C",
+    water: {
+      atk: 730,
+      time: 3
+    },
+    range: "middle"
   },
   {
     name: "高級魔法凝聚",
     cost: 5,
     grade: 4,
-    buff: [{bonus: 25, times: 1}]
+    buff: [{bonus: 25, times: 1}],
+    range: "single"
   },
   {
     name: "絕對零度",
@@ -193,7 +227,8 @@ const weapons = [
     water: {
       atk: 1500,
       time: 6
-    }
+    },
+    range: "middle"
   },
   {
     name: "破邪法杖",
@@ -201,6 +236,7 @@ const weapons = [
     grade: 3,
     atk: 250,
     modLv: "A",
+    range: "single",
   },
   {
     name: "草莓刨冰",
@@ -208,7 +244,8 @@ const weapons = [
     grade: 4,
     atk: 200,
     modLv: "F",
-    buff: [{waterBonus: 15}] // FIXME: 原文是受擊增傷，跟增傷效果一樣嗎？能疊？
+    buff: [{waterBonus: 15}], // FIXME: 原文是受擊增傷，跟增傷效果一樣嗎？能疊？
+    range: "single"
   },
   {
     name: "高效魔力轉換裝置",
@@ -216,7 +253,8 @@ const weapons = [
     casting: 7,
     grade: 3,
     atk: 1650,
-    modLv: "SS"
+    modLv: "SS",
+    range: "nearSmall"
   },
   {
     name: "純白之權杖",
@@ -225,7 +263,8 @@ const weapons = [
     grade: 3,
     atk: 300,
     modLv: "C",
-    bonus: 80
+    bonus: 80,
+    range: "small"
   },
   {
     name: "邪龍煉獄黑王杖",
@@ -234,10 +273,11 @@ const weapons = [
     atk: 200,
     modLv: "S",
     fire: {
-      // FIXME: find the correct mod
-      atk: 0,
+      modLv: 1.6,
+      modType: "int",
       time: 6
-    }
+    },
+    range: "middle"
   },
   {
     name: "流水法杖",
@@ -249,7 +289,8 @@ const weapons = [
       modLv: "B",
       modType: "int",
       time: 0
-    }
+    },
+    range: "small"
   },
   {
     name: "高壓閃電",
@@ -261,7 +302,8 @@ const weapons = [
     lightning: {
       atk: 250,
       time: 10
-    }
+    },
+    range: "small"
   },
   {
     name: "衛兵法杖",
@@ -269,20 +311,23 @@ const weapons = [
     casting: 7,
     grade: 4,
     atk: 742,
-    modLv: "A"
+    modLv: "A",
+    range: "middle"
   },
   {
     name: "尤里走路",
     cost: 2,
     grade: 1,
-    atk: 900
+    atk: 900,
+    range: "middle",
   },
   {
     name: "奧義（莉伊）",
     cost: 10,
     casting: 10,
     atk: 952,
-    modLv: "S0"
+    modLv: "S0",
+    range: "large",
   },
   {
     name: "奧義（歌莉雅）",
@@ -293,7 +338,8 @@ const weapons = [
     fire: {
       atk: 1250,
       time: 5
-    }
+    },
+    range: "large"
   },
   {
     name: "奧義（歌莉雅）（地型）",
@@ -304,14 +350,15 @@ const weapons = [
     fire: {
       atk: 1250 + 20 * 90,
       time: 20
-    }
+    },
   },
   {
     name: "專武（西比拉）",
     cost: 7,
     casting: 7,
     atk: 1000,
-    modLv: "SSS"
+    modLv: "SSS",
+    range: "large"
   }
 ];
 

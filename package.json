@@ -7,6 +7,7 @@
     "dev": "run-p start-dev build-dev",
     "build": "shx rm -rf docs && rollup -c",
     "build-dev": "rollup -cw",
+    "build-drop-table": "shx rm drop-table/*.json && node drop-table/build.mjs",
     "start": "sirv docs",
     "start-dev": "sirv docs --dev"
   },

@@ -61,6 +61,11 @@ class State {
     this.fire = fire;
     this.freeze = freeze;
   }
+  clone(extra = {}) {
+    const s = new State({});
+    Object.assign(s, this, extra);
+    return s;
+  }
   getDef(weapon) {
     return getDef(this, weapon);
   }
@@ -205,7 +210,9 @@ function processWeapon(state, weapon) {
   }
 
   if (weapon.trap) {
-    state.damage += Math.max(weapon.trap.atk - def, 1);
+    const trapState = state.clone({passive: [], buff: []});
+    trapState.processWeapon(weapon.trap);
+    state.damage += trapState.damage;
   }
 
   if (weapon.fire && (!weapon.fire.cond || weapon.fire.cond(state))) {

@@ -164,6 +164,16 @@ const weapons = [
     modType: "int",
   },
   {
+    name: "聖樹祭慶祝指南",
+    cost: 5,
+    grade: 3,
+    atk: 50,
+    atkType: "heal",
+    modLv: "C",
+    modType: "int",
+    buff: [{def: 250, times: 99}]
+  },
+  {
     name: "夏洛蒂自傳",
     cost: 5,
     grade: 3,

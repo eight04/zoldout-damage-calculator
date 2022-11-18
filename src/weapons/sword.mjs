@@ -152,6 +152,13 @@ export default [
     }
   },
   {
+    name: "受祝福的聖樹樹枝",
+    cost: 4,
+    grade: 3,
+    atk: 420,
+    modLv: "B"
+  },
+  {
     name: "報紙卷+12",
     cost: 2,
     atk: 200,

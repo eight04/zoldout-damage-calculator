@@ -111,6 +111,18 @@ export default [
     }
   },
   {
+    name: "大範圍武器加速、攻擊增加（聖樹梅米）",
+    type: "wand",
+    beforeWeapon: (state, weapon) => {
+      if (weapon.range === "large") {
+        state.cost -= 1;
+        if (state.hit) {
+          state.buff.push({bonus: 10, times: 1});
+        }
+      }
+    }
+  },
+  {
     name: "額外傷害（尤里+泳裝伊蓮）",
     type: "wand",
     afterWeapon: (state, weapon) => {
