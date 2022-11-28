@@ -353,6 +353,37 @@ const weapons = [
     },
   },
   {
+    name: "專武（歌莉雅）",
+    cost: 5,
+    atk: 399,
+    modLv: "D",
+    range: "middle",
+    fire: {
+      atk: 750,
+      time: 5
+    }
+  },
+  {
+    name: "專武（奧蘿菈）",
+    cost: 7,
+    casting: 7,
+    atk: 100,
+    modLv: "B",
+    range: "large",
+    water: {
+      atk: 2800,
+      time: 7
+    },
+  },
+  {
+    name: "專武（聖誕梅米）",
+    cost: 8,
+    casting: 6,
+    atk: 300,
+    modLv: "S",
+    range: "large",
+  },
+  {
     name: "專武（西比拉）",
     cost: 7,
     casting: 7,

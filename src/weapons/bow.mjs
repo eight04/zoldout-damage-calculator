@@ -296,6 +296,49 @@ export default [
     modLv: "D"
   },
   {
+    name: "專武（艾莉諾拉）",
+    cost: 3,
+    grade: 3,
+    atk: 82,
+    modLv: "F",
+    lightning: {
+      atk: 70,
+      time: 10
+    },
+    afterWeapon: (state, weapon) => {
+      const {damage} = state;
+      state.processWeapon({...weapon, lightning: null, afterWeapon: null});
+      state.damage += damage;
+    }
+  },
+  {
+    name: "專武（格蕾絲）",
+    cost: 5,
+    grade: 3,
+    atk: 231,
+    modLv: "D",
+    poison: {
+      atk: 1000,
+      turn: 2,
+      bonus: 30
+    }
+  },
+  {
+    name: "專武（聖誕赫利德）",
+    cost: 3,
+    grade: 3,
+    atk: 200,
+    modLv: "D",
+    poison: {
+      atk: 600,
+      turn: 2
+    },
+    fire: {
+      atk: 100,
+      time: 6
+    }
+  },
+  {
     name: "奧義（格蕾絲）",
     cost: 7,
     atk: 285,
