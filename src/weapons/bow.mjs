@@ -360,7 +360,7 @@ export default [
     name: "奧義（菲恩）",
     cost: 2,
     atk: 330,
-    modLv: "C",
+    modLv: "C0",
     hit: 2,
     targetBuff: [{def: -150, times: 99}]
   },
@@ -368,10 +368,21 @@ export default [
     name: "奧義（艾娜）",
     cost: 5,
     atk: 579,
-    modLv: "A",
+    modLv: "A0",
     fire: {
       atk: 1080,
       time: 6
+    }
+  },
+  {
+    name: "奧義（聖誕赫利德）",
+    cost: 8,
+    atk: 150,
+    modLv: "B0",
+    hit: 4,
+    trap: {
+      atk: 1400,
+      time: 999
     }
   }
 ];
