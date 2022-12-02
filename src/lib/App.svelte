@@ -6,6 +6,7 @@ import {currentPage} from "./env.mjs";
 import {getStore} from "./store.mjs";
 import {simulate} from "./simulator.mjs";
 import passive from "./passive.mjs";
+import enemy from "./enemy.mjs";
 
 export let weapons, storeKey;
 
@@ -42,6 +43,8 @@ const sortMethod = getStore(`${storeKey}/sortMethod`, {
   field: null,
   dir: 1
 });
+
+let choosedEnemy;
 
 let combos = [weapons[0]];
 let result = {
@@ -114,6 +117,16 @@ $: {
   }
 }
 
+function loadChoosedEnemy() {
+  $hp = choosedEnemy.hp || 0;
+  $def = choosedEnemy.def || 0;
+  $mdef = choosedEnemy.mdef || 0;
+  $fireResist = choosedEnemy.fireResist || 0;
+  $waterResist = choosedEnemy.waterResist || 0;
+  $poisonResist = choosedEnemy.poisonResist || 0;
+  $lightningResist = choosedEnemy.lightningResist || 0;
+}
+
 function addCombo(i) {
   combos.splice(i, 0, combos[i]);
   combos = combos;
@@ -156,6 +169,16 @@ function addAllToCompare() {
 <h1>Zold:Out Damage Calculator</h1>
 
 <Nav />
+
+<div class="enemy-preset">
+  <span>載入預設敵人</span>
+  <select bind:value={choosedEnemy}>
+    {#each enemy as e}
+      <option value={e}>{e.name}</option>
+    {/each}
+  </select>
+  <button on:click={loadChoosedEnemy}>Apply</button>
+</div>
 
 <div class="base-info">
   <span>血量</span>
@@ -285,6 +308,13 @@ function addAllToCompare() {
 :global(input[type=number]) {
   width: 100%;
   box-sizing: border-box;
+}
+.enemy-preset {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
+  gap: 1em;
+  margin: 1em 0;
 }
 .base-info {
   display: grid;

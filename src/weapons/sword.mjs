@@ -257,11 +257,9 @@ export default [
     cost: 5,
     casting: 3,
     grade: 4,
-    lightning: {
-      atk: 500,
-      modLv: "B",
-      modType: "str"
-    }
+    atk: 500,
+    atkType: "lightning",
+    modLv: "B",
   },
   {
     name: "爆燃殆盡",
