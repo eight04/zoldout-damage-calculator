@@ -244,7 +244,7 @@ const weapons = [
     grade: 4,
     atk: 200,
     modLv: "F",
-    buff: [{waterBonus: 15}], // FIXME: 原文是受擊增傷，跟增傷效果一樣嗎？能疊？
+    targetBuff: [{waterInjuryBonus: 15, times: 999}],
     range: "single"
   },
   {
@@ -330,6 +330,31 @@ const weapons = [
     range: "large",
   },
   {
+    name: "奧義（奧蘿菈）",
+    cost: 7,
+    casting: 7,
+    atk: 500,
+    modLv: "SS",
+    range: "middle",
+    water: {
+      atk: 4000,
+      time: 6
+    }
+  },
+  {
+    name: "奧義（奧蘿菈）（冰）",
+    cost: 7,
+    casting: 7,
+    atk: 500,
+    modLv: "SS",
+    atkType: "water",
+    range: "middle",
+    water: {
+      atk: 4000,
+      time: 6
+    }
+  },
+  {
     name: "奧義（歌莉雅）",
     cost: 6,
     casting: 6,
@@ -394,8 +419,8 @@ const weapons = [
 ];
 
 weapons.forEach(w => {
-  w.modType = "int";
-  w.atkType = "magic";
+  w.modType = w.modType || "int";
+  w.atkType = w.atkType || "magic";
 });
 
 export default weapons;

@@ -16,6 +16,25 @@ export default [
     waterResist: 30,
     poisonResist: 60,
     lightningResist: 70
+  },
+  {
+    name: "腐朽魔像",
+    def: 431,
+    mdef: 180,
+    fireResist: 50,
+    waterResist: 80,
+    poisonResist: 99,
+    lightningResist: -40
+  },
+  {
+    name: "雪人王",
+    def: 319,
+    mdef: 319,
+    hp: 68886,
+    fireResist: -30,
+    waterResist: 0,
+    poisonResist: -42,
+    lightningResist: 50
   }
 ];
 

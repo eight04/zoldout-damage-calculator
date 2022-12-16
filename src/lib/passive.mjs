@@ -86,6 +86,21 @@ export default [
     }
   },
   {
+    name: "凍結時增加水傷（奧蘿菈）",
+    type: "buff",
+    beforeWeapon: (state) => {
+      let b = state.targetBuff.find(b => b.id === "arora");
+      if (!b) {
+        b = {
+          id: "arora",
+          times: 999
+        };
+        state.targetBuff.push(b);
+      }
+      b.waterInjuryBonus = state.freeze ? 30 : 0;
+    }
+  },
+  {
     name: "使用火武器後加速（歌莉雅）",
     type: "wand",
     afterWeapon: (state, weapon) => {
@@ -138,6 +153,32 @@ export default [
       if (weapon.casting >= 6 && state.hit) {
         state.buff.push({bonus: 25, times: 1});
       }
+    }
+  },
+  {
+    name: "水武器智力增加（泳裝伊蓮）",
+    type: "buff",
+    beforeWeapon: (state, weapon) => {
+      if (weapon.water || weapon.atkType === "water") {
+        state.buff.push({int: 300, times: 1, id: "swimElinInt"});
+      }
+    },
+    afterWeapon: (state) => {
+      const i = state.buff.findIndex(b => b.id === "swimElinInt");
+      if (i >= 0) {
+        state.buff.splice(i, 1);
+      }
+    }
+  },
+  {
+    name: "水傷增加（泳裝伊蓮奧義）",
+    type: "buff",
+    beforeAll: state => {
+      state.targetBuff.push({
+        id: "swimElin",
+        waterInjuryBonus: 40,
+        times: 99
+      });
     }
   },
   {

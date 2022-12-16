@@ -69,21 +69,23 @@ class State {
   getDef(weapon) {
     return getDef(this, weapon);
   }
-  getResist(key) {
-    const value = this[key] + this.targetBuff.reduce((output, b) => output + (b[key] || 0), 0);
-    return (100 - value) / 100;
+  _getResist(resistKey, bonusKey, injuryKey) {
+    const value = this[resistKey] + this.targetBuff.reduce((output, b) => output + (b[resistKey] || 0), 0);
+    const bonus = this.buff.reduce((output, b) => output * (1 + (b[bonusKey] || 0) / 100), 1);
+    const injury = this.targetBuff.reduce((output, b) => output * (1 + (b[injuryKey] || 0) / 100), 1);
+    return (1 - value / 100) * bonus * injury;
   }
   getFireResist() {
-    return this.getResist("fireResist");
+    return this._getResist("fireResist", "fireBonus", "fireInjuryBonus");
   }
   getWaterResist() {
-    return this.getResist("waterResist");
+    return this._getResist("waterResist", "waterBonus", "waterInjuryBonus");
   }
   getPoisonResist() {
-    return this.getResist("poisonResist");
+    return this._getResist("poisonResist", "poisonBonus", "poisonInjuryBonus");
   }
   getLightningResist() {
-    return this.getResist("lightningResist");
+    return this._getResist("lightningResist", "lightningBonus", "lightningInjuryBonus");
   }
   getInjuryBonus() {
     const bonus = this.targetBuff.reduce((output, b) => output + (b.injuryBonus || 0), 0);
@@ -109,7 +111,7 @@ class State {
 export function simulate({
   weapons, passiveIds, ...options
 }) {
-  const passive = allPassive.filter((p, i) => passiveIds.includes(i));
+  const passive = allPassive.filter((_, i) => passiveIds.includes(i));
   const stages = [];
   const state = new State({...options, passive});
   calculatePassive(state, null, "beforeAll");
@@ -185,9 +187,9 @@ function processWeapon(state, weapon) {
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
   state.damage = 0;
   state.targets = Math.min(state.maxTargets, weapon.targets || 1);
+  calculatePassive(state, weapon, "beforeWeapon");
   const def = getDef(state, weapon);
   const resist = getResist(state, weapon);
-  calculatePassive(state, weapon, "beforeWeapon");
   for (let i = 0; i < state.hit; i++) {
     calculatePassive(state, weapon, "beforeHit");
     state.currentHit = i + 1;
@@ -223,7 +225,7 @@ function processWeapon(state, weapon) {
   }
 
   if (weapon.water && (!weapon.water.cond || weapon.water.cond(state))) {
-    state.damage += state.getWaterAtk(weapon.water) * (100 - state.waterResist) / 100 * state.targets;
+    state.damage += state.getWaterAtk(weapon.water) * state.getWaterResist() * state.targets;
     if (weapon.water.time) {
       state.freeze = true;
     }
