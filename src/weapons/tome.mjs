@@ -155,6 +155,15 @@ const weapons = [
     modType: "int",
   },
   {
+    name: "冰之凝視",
+    cost: 5,
+    grade: 3,
+    atk: 150,
+    atkType: "heal",
+    modLv: "D",
+    modType: "int",
+  },
+  {
     name: "火焰之加護",
     cost: 4,
     grade: 4,

@@ -159,6 +159,15 @@ export default [
     modLv: "B"
   },
   {
+    name: "飛翼結晶劍",
+    cost: 4,
+    atk: 800,
+    modLv: "C",
+    stance: {
+      gain: 1
+    }
+  },
+  {
     name: "報紙卷+12",
     cost: 2,
     atk: 200,

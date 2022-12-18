@@ -280,6 +280,19 @@ const weapons = [
     range: "middle"
   },
   {
+    name: "凍凍吉米杖",
+    cost: 7,
+    casting: 6,
+    atk: 0,
+    modLv: "S",
+    water: {
+      modLv: "D",
+      modType: "int",
+      time: 5
+    },
+    range: "middle"
+  },
+  {
     name: "流水法杖",
     cost: 6,
     casting: 4,

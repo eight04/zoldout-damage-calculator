@@ -225,6 +225,20 @@ export default [
     modLv: "A"
   },
   {
+    name: "魔像結晶弓",
+    cost: 4,
+    grade: 4,
+    atk: 120,
+    modLv: "D"
+  },
+  {
+    name: "魔像結晶弓（擊殺）",
+    cost: 1,
+    grade: 4,
+    atk: 120,
+    modLv: "D"
+  },
+  {
     name: "實驗炸彈彈射器",
     cost: 6,
     grade: 4,
