@@ -14,6 +14,24 @@ export default [
     }
   },
   {
+    name: "攻擊後反擊四次（奧布利）",
+    type: "sword",
+    afterWeapon: (state) => {
+      if (state.oblyPassive) return;
+      if (state.hit) {
+        const newState = state.clone({oblyPassive: true});
+        newState.processWeapon({
+          name: "反擊",
+          cost: 0,
+          atk: 0,
+          modLv: 1.45,
+          hit: 4,
+        });
+        state.damage += newState.damage;
+      }
+    }
+  },
+  {
     name: "傷害後攻擊增加（艾莉諾拉）",
     type: "bow",
     afterHit: state => {

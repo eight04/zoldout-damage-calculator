@@ -35,6 +35,15 @@ export default [
     waterResist: 0,
     poisonResist: -42,
     lightningResist: 50
+  },
+  {
+    name: "黃昏雲團",
+    def: 189,
+    mdef: 304,
+    fireResist: 75,
+    waterResist: 50,
+    poisonResist: 50,
+    lightningResist: 75
   }
 ];
 
