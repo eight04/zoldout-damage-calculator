@@ -53,7 +53,7 @@ class State {
     this.totalHit = 0;
     this.stance = stance;
     this.totalHit = 0;
-    this.buff = buff;
+    this.buff = buff.slice();
     this.targetBuff = [];
     this.targets = 0;
 

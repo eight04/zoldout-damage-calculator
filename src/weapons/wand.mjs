@@ -286,7 +286,7 @@ const weapons = [
     atk: 0,
     modLv: "S",
     water: {
-      modLv: "D",
+      modLv: "D0",
       modType: "int",
       time: 5
     },
