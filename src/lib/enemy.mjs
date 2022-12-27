@@ -44,6 +44,15 @@ export default [
     waterResist: 50,
     poisonResist: 50,
     lightningResist: 75
+  },
+  {
+    name: "火鷹族勇士",
+    def: 229,
+    mdef: 465,
+    fireResist: 100,
+    waterResist: -100,
+    poisonResist: 75,
+    lightningResist: 40
   }
 ];
 

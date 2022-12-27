@@ -30,7 +30,8 @@ class State {
     fireResist, waterResist, poisonResist, lightningResist,
     fire = false, freeze = false, poison = false,
     poisonTurns, stance = 0, maxTargets = 1,
-    passive
+    passive,
+    buff = []
   }) {
     this.hp = hp;
     this.atk = atk;
@@ -52,7 +53,7 @@ class State {
     this.totalHit = 0;
     this.stance = stance;
     this.totalHit = 0;
-    this.buff = [];
+    this.buff = buff;
     this.targetBuff = [];
     this.targets = 0;
 

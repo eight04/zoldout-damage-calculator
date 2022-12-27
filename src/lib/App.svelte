@@ -36,6 +36,8 @@ const lightning = getStore(`comm/lightning`, false);
 const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
 const stance = getStore(`${storeKey}/stance`, 0);
 
+const bonus = getStore(`${storeKey}/bonus`, 0);
+
 const passiveIds = getStore(`${storeKey}/passiveIds`, []);
 
 const compareList = getStore(`${storeKey}/compareList`, []);
@@ -60,6 +62,12 @@ let sortedCompareList = [];
 let options = {};
 
 $: {
+  const buff = [
+    {
+      bonus: $bonus,
+      times: 999
+    }
+  ];
   options = {
     hp: $hp,
     atk: $atk,
@@ -80,7 +88,9 @@ $: {
     fireResist: $fireResist,
     waterResist: $waterResist,
     poisonResist: $poisonResist,
-    lightningResist: $lightningResist
+    lightningResist: $lightningResist,
+
+    buff
   };
 }
 
@@ -219,6 +229,8 @@ function addAllToCompare() {
   <input type="number" bind:value={$poisonTurns}>
   <span>當前架勢</span>
   <input type="number" bind:value={$stance}>
+  <span>攻擊力增加</span>
+  <input type="number" bind:value={$bonus} class="cspan3">
   {#each passive as p, i}
     {#if currentPage === p.type || p.type === "buff"}
       <label class="cspan">

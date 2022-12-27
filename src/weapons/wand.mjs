@@ -297,12 +297,10 @@ const weapons = [
     cost: 6,
     casting: 4,
     grade: 3,
-    water: {
-      atk: 0,
-      modLv: "B",
-      modType: "int",
-      time: 0
-    },
+    atk: 0,
+    atkType: "water",
+    modLv: "B",
+    modType: "int",
     range: "small"
   },
   {
