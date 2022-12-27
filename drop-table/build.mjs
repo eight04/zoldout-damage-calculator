@@ -127,7 +127,7 @@ async function loadStagesFromEight(stages) {
     if (!sheet) continue;
 
     console.log(stage.name);
-    await sheet.loadCells("A1:2");
+    await handle429(() => sheet.loadCells("A1:2"));
     const map = new Map;
     for (let i = 0; i < sheet.columnCount; i++) {
       map.set(sheet.getCell(0, i).value, sheet.getCell(1, i).value);
@@ -139,6 +139,22 @@ async function loadStagesFromEight(stages) {
     for (const key in stage.drops) {
       if (rMap.has(key)) {
         stage.drops[key] = rMap.get(key) * ap;
+      }
+    }
+  }
+}
+
+// handle axios 429 error
+async function handle429(callback) {
+  for (;;) {
+    try {
+      return await callback();
+    } catch (e) {
+      if (e.response?.status === 429) {
+        console.log("429, retrying...");
+        await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+      } else {
+        throw e;
       }
     }
   }
