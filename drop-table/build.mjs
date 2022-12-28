@@ -18,7 +18,7 @@ for (const stage of stages) {
     }
     items.get(item).push({
       stage,
-      rate: stage.drops[item] / 20
+      rate: stage.drops[item] / getStageStamina(stage)
     });
   }
 }
@@ -36,6 +36,11 @@ await writeFile(new URL("README.md", import.meta.url), `
 
 ${drawTable(sortedItems)}
 `);
+
+function getStageStamina(stage) {
+  if (getDifficulty(stage.name) === 0) return 10;
+  return 20;
+}
 
 function getDifficulty(s) {
   if (/普通/.test(s)) {
