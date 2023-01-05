@@ -156,6 +156,41 @@ export default [
     }
   },
   {
+    name: "打星（納蒂雅）",
+    type: "buff",
+    beforeWeapon: (state, weapon) => {
+      if (weapon.atkType && weapon.atkType !== "physic") return;
+
+      state.oldTarget = state.getTarget();
+      state.setTarget({
+        // FIXME: need a flag to cancel elemental damage?
+        def: 0,
+        mdef: 0,
+        waterResist: 100,
+        fireResist: 100,
+        poisonResist: 100,
+        lightningResist: 100,
+        targetBuff: []
+      });
+    },
+    afterWeapon: (state, weapon) => {
+      if (weapon.atkType && weapon.atkType !== "physic") return;
+
+      const starState = state.clone({
+        buff: state.buff.map(b => ({...b}))
+          .filter(b => b.finalBonus), // only final bonus work on star
+        targetBuff: state.oldTarget.targetBuff
+      });
+      starState.setTarget(state.oldTarget);
+      starState.processWeapon({
+        atk: starState.damage * 1.2,
+        atkType: "magic"
+      });
+      state.damage = starState.damage;
+      state.setTarget(state.oldTarget);
+    }
+  },
+  {
     name: "額外傷害（尤里+泳裝伊蓮）",
     type: "wand",
     afterWeapon: (state, weapon) => {

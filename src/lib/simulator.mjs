@@ -52,7 +52,6 @@ class State {
     this.hit = 0;
     this.totalHit = 0;
     this.stance = stance;
-    this.totalHit = 0;
     this.buff = buff.slice();
     this.targetBuff = [];
     this.targets = 0;
@@ -109,6 +108,21 @@ class State {
   }
   getFinalBonus() {
     return this.buff.reduce((output, b) => output * (1 + (b.finalBonus || 0) / 100), 1);
+  }
+  getTarget() {
+    return {
+      hp: this.hp,
+      mdef: this.mdef,
+      def: this.def,
+      waterResist: this.waterResist,
+      fireResist: this.fireResist,
+      poisonResist: this.poisonResist,
+      lightningResist: this.lightningResist,
+      targetBuff: this.targetBuff,
+    };
+  }
+  setTarget(props) {
+    Object.assign(this, props);
   }
 }
 
