@@ -70,7 +70,9 @@ class State {
     return getDef(this, weapon);
   }
   _getResist(resistKey, bonusKey, injuryKey) {
-    const value = this[resistKey] + this.targetBuff.reduce((output, b) => output + (b[resistKey] || 0), 0);
+    const value = this[resistKey] ? 
+      this[resistKey] + this.targetBuff.reduce((output, b) => output + (b[resistKey] || 0), 0) :
+      0;
     const bonus = this.buff.reduce((output, b) => output * (1 + (b[bonusKey] || 0) / 100), 1);
     const injury = this.targetBuff.reduce((output, b) => output * (1 + (b[injuryKey] || 0) / 100), 1);
     return (1 - value / 100) * bonus * injury;
@@ -175,7 +177,10 @@ function getResist(state, {atkType}) {
   if (atkType === "lightning") {
     return state.getLightningResist();
   }
-  return 1;
+  if (atkType === "magic") {
+    return state._getResist(null, "magicBonus", "magicInjuryBonus");
+  }
+  return state._getResist(null, "physicBonus", "physicInjuryBonus");
 }
 
 function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0}) {

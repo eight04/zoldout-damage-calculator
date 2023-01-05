@@ -191,6 +191,13 @@ export default [
     }
   },
   {
+    name: "物理傷害增加一次（納蒂雅）",
+    type: "buff",
+    beforeAll: state => {
+      state.buff.push({physicBonus: 15, times: 1});
+    }
+  },
+  {
     name: "額外傷害（尤里+泳裝伊蓮）",
     type: "wand",
     afterWeapon: (state, weapon) => {
