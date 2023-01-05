@@ -134,10 +134,13 @@ async function loadStagesFromEight(stages) {
     console.log(stage.name);
     await handle429(() => sheet.loadCells("A1:2"));
     const map = new Map;
+    const rMap = new Map;
     for (let i = 0; i < sheet.columnCount; i++) {
-      map.set(sheet.getCell(0, i).value, sheet.getCell(1, i).value);
+      const key = sheet.getCell(0, i).value;
+      const value = sheet.getCell(1, i).value;
+      map.set(key, value);
+      rMap.set(value, key);
     }
-    const rMap = new Map([...map.entries()].map(([l, r]) => [r, l]));
     console.log(rMap);
     const ap = map.get("體力");
 
