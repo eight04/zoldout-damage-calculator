@@ -107,6 +107,9 @@ class State {
   processWeapon(weapon) {
     return processWeapon(this, weapon);
   }
+  getFinalBonus() {
+    return this.buff.reduce((output, b) => output * (1 + (b.finalBonus || 0) / 100), 1);
+  }
 }
 
 export function simulate({
@@ -169,13 +172,13 @@ function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0
     * (bonus + 100) / 100;
 }
 
-function getPoisonDamage({poison, poisonTurns, poisonResist}) {
+function getPoisonDamage(state) {
   let damage = 0;
-  for (const p of poison) {
+  for (const p of state.poison) {
     if (!p.atk) continue;
-    damage += p.atk * Math.min(p.turn, poisonTurns) / p.turn * (100 - poisonResist) / 100;
+    damage += p.atk * Math.min(p.turn, state.poisonTurns) / p.turn * state.getPoisonResist();
   }
-  return damage;
+  return damage * state.getFinalBonus();
 }
 
 function calculatePassive(state, weapon, key) {
@@ -200,6 +203,7 @@ function processWeapon(state, weapon) {
     if (weapon.stance?.use === state.stance) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
+    atk *= state.getFinalBonus();
     state.damage += Math.max(atk - def, 1) * resist * state.getInjuryBonus() * state.targets;
     if (state.lightning?.atk) {
       state.damage += state.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;
@@ -213,28 +217,29 @@ function processWeapon(state, weapon) {
   }
 
   if (weapon.trap) {
-    const trapState = state.clone({passive: [], buff: []});
+    const trapState = state.clone({passive: [], buff: state.buff.filter(b => b.finalBonus).map(b => ({...b}))});
     trapState.processWeapon(weapon.trap);
     state.damage += trapState.damage;
   }
 
   if (weapon.fire && (!weapon.fire.cond || weapon.fire.cond(state))) {
-    state.damage += state.getFireAtk(weapon.fire) * state.getFireResist() * state.targets;
+    state.damage += state.getFireAtk(weapon.fire) * state.getFireResist() * state.targets * state.getFinalBonus();
     if (weapon.fire.time) {
       state.fire = true;
     }
   }
 
   if (weapon.water && (!weapon.water.cond || weapon.water.cond(state))) {
-    state.damage += state.getWaterAtk(weapon.water) * state.getWaterResist() * state.targets;
+    state.damage += state.getWaterAtk(weapon.water) * state.getWaterResist() * state.targets * state.getFinalBonus();
     if (weapon.water.time) {
       state.freeze = true;
     }
   }
 
   if (weapon.lightning && (!weapon.lightning.cond || weapon.lightning.cond(state))) {
+    // FIXME: does lightning work with final bonus?
     const atk = state.getLightningAtk(weapon.lightning);
-    state.damage += atk * (100 - state.lightningResist) / 100 * state.targets;
+    state.damage += atk * state.getLightningResist() * state.targets * state.getFinalBonus();
     if (!state.lightning.atk || weapon.lightning.time > state.lightning.time) {
       state.lightning.atk = atk;
       state.lightning.time = weapon.lightning.time;

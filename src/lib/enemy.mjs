@@ -53,6 +53,15 @@ export default [
     waterResist: -100,
     poisonResist: 75,
     lightningResist: 40
+  },
+  {
+    name: "坑道地蛛",
+    def: 131,
+    mdef: 981,
+    fireResist: 70,
+    waterResist: 90,
+    poisonResist: 20,
+    lightningResist: 80
   }
 ];
 

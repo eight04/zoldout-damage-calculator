@@ -175,6 +175,14 @@ export default [
     modLv: "E"
   },
   {
+    name: "射不準的玩具弓（兩倍）",
+    cost: 2,
+    grade: 3,
+    atk: 120,
+    modLv: "E",
+    hit: 2
+  },
+  {
     name: "彈射陷阱弓MK2",
     cost: 5,
     grade: 3,
