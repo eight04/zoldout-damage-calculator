@@ -10,6 +10,12 @@ import enemy from "./enemy.mjs";
 
 export let weapons, storeKey;
 
+for (const w of weapons) {
+  if (w.atk && !w.name.startsWith("奧義")) {
+    w.atk *= 1.05; // quality also affect atk
+  }
+}
+
 weapons.unshift({
   name: "移動",
   cost: currentPage === "sword" ? 1 : 2

@@ -268,7 +268,37 @@ const weapons = [
     modLv: "C",
     modType: "int",
     targets: 99
-  }
+  },
+  {
+    name: "奧義（辛西婭）",
+    cost: 6,
+    grade: 4,
+    atk: 110,
+    atkType: "magic",
+    modLv: "S",
+    modType: "str",
+    targets: 99,
+  },
+  {
+    name: "奧義（辛西婭）（地型）",
+    cost: 0,
+    grade: 4,
+    atk: 975,
+    atkType: "magic",
+    targets: 99,
+    hit: 10,
+  },
+  {
+    name: "專武（辛西婭）",
+    cost: 5,
+    grade: 4,
+    atk: 280,
+    atkType: "magic",
+    modLv: "A",
+    modType: "str",
+    targets: 99,
+    bonus: 30,
+  },
 ];
 
 export default weapons;

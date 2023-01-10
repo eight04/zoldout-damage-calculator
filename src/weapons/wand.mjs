@@ -389,6 +389,31 @@ const weapons = [
     },
   },
   {
+    name: "奧義（新年莉伊）（煙花彈）",
+    cost: 10,
+    casting: 1,
+    atk: 600,
+    modLv: "Ex0",
+    range: "large",
+    bonus: 300
+  },
+  {
+    name: "奧義（新年莉伊）",
+    cost: 10,
+    casting: 10,
+    atk: 600,
+    modLv: "Ex0",
+    range: "large",
+  },
+  {
+    name: "奧義（西比拉）",
+    cost: 6,
+    casting: 6,
+    atk: 1450,
+    modLv: "SS0",
+    range: "middle",
+  },
+  {
     name: "專武（歌莉雅）",
     cost: 5,
     atk: 399,
@@ -418,6 +443,15 @@ const weapons = [
     atk: 300,
     modLv: "S",
     range: "large",
+  },
+  {
+    name: "專武（新年莉伊）",
+    cost: 6,
+    casting: 6,
+    atk: 166,
+    modLv: "SS",
+    range: "large",
+    bonus: 30
   },
   {
     name: "專武（西比拉）",
