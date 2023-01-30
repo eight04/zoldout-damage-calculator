@@ -1,6 +1,12 @@
 import {writeFile, readFile} from "fs/promises";
 import gs from "google-spreadsheet";
 
+const DIFFICULTY = {
+  n: "普通",
+  h: "困難",
+  nm: "惡夢"
+};
+
 const doc = new gs.GoogleSpreadsheet("1CeTO-Bae2xNGrAtTo1zAb81joirxu4CGnrdVieXQbfU");
 doc.useApiKey("AIzaSyBmF9PBdznx-Dpxa2YOWWK6gcThwPFpLDM");
 await doc.loadInfo();
@@ -84,9 +90,14 @@ function dropsToLine(drops) {
   return Object.entries(drops).map(([key, value]) => `${value.toFixed(1)}${key}`).join("/");
 }
 
+function formatName(s) {
+  const [, d, m] = s.match(/^(n|h|NM)-(.*)/i);
+  return `${DIFFICULTY[d.toLowerCase()]}${m}`;
+}
+
 async function loadStagesFromSilverWind() {
-  const sheet = doc.sheetsByTitle["素材"];
-  await sheet.loadCells("A4:C");
+  const sheet = objectGet(doc.sheetsByTitle, /^素材/);
+  await sheet.loadCells("A4:E");
 
   const stages = [];
 
@@ -96,9 +107,9 @@ async function loadStagesFromSilverWind() {
       drops: {}
     };
     const name = sheet.getCell(i, aToIndex("A"));
-    stage.name = name.value;
+    stage.name = formatName(name.value);
 
-    for (const s of ["B", "C"].map(key => sheet.getCell(i, aToIndex(key)).value)) {
+    for (const s of ["B", "E"].map(key => sheet.getCell(i, aToIndex(key)).value)) {
       if (/null/i.test(s)) continue;
       for (const item of s.split("/").map(i => i.trim())) {
         let [, n, name] = item.match(/^(\d*)(.*)/);
@@ -182,14 +193,14 @@ async function loadStages() {
 }
 
 async function loadMaterial(doc) {
-  const sheet = doc.sheetsByTitle["武器"];
-  await sheet.loadCells("A2:B");
+  const sheet = objectGet(doc.sheetsByTitle, /^武器/);
+  await sheet.loadCells("A2:D");
 
   const result = {};
 
   for (let i = 2 - 1; i < sheet.rowCount; i++) {
     const weapon = sheet.getCell(i, aToIndex("A")).value;
-    for (const mat of sheet.getCell(i, aToIndex("B")).value.split("/").map(i => i.trim())) {
+    for (const mat of sheet.getCell(i, aToIndex("D")).value.split("/").map(i => i.trim())) {
       if (!result[mat]) {
         result[mat] = [];
       }
@@ -199,4 +210,10 @@ async function loadMaterial(doc) {
   await writeFile(new URL("material.json", import.meta.url), JSON.stringify(result, null, 2));
 
   return result;
+}
+
+function objectGet(obj, s) {
+  for (const key in obj) {
+    if (s.test(key)) return obj[key];
+  }
 }
