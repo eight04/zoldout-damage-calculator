@@ -62,6 +62,15 @@ export default [
     waterResist: 90,
     poisonResist: 20,
     lightningResist: 80
-  }
+  },
+  {
+    name: "赫黑狼人",
+    def: 758,
+    mdef: 915,
+    fireResist: 70,
+    waterResist: 20,
+    poisonResist: 50,
+    lightningResist: 30
+  },
 ];
 
