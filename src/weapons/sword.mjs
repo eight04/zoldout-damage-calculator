@@ -129,6 +129,28 @@ export default [
     }
   },
   {
+    name: "舞台禮劍",
+    cost: 4,
+    grade: 3,
+    atk: 30,
+    modLv: "A",
+  },
+  {
+    name: "舞台禮劍（降攻）",
+    cost: 4,
+    grade: 3,
+    atk: 30,
+    modLv: "A",
+    bonus: 50
+  },
+  {
+    name: "星光蟹王輕劍",
+    cost: 7,
+    grade: 3,
+    atk: 500,
+    modLv: "A",
+  },
+  {
     name: "閃燃焰劍",
     cost: 4,
     grade: 3,

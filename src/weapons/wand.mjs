@@ -180,6 +180,14 @@ const weapons = [
     range: "middle",
   },
   {
+    name: "彩蛋權杖",
+    cost: 5,
+    grade: 3,
+    atk: 102,
+    modLv: "B",
+    range: "middle",
+  },
+  {
     name: "碧空颶風",
     cost: 8,
     casting: 4,

@@ -128,6 +128,13 @@ export default [
     modLv: "C"
   },
   {
+    name: "開蛋器",
+    cost: 3,
+    grade: 3,
+    atk: 220,
+    modLv: "D"
+  },
+  {
     name: "碧海旋螺弓",
     cost: 3,
     grade: 3,

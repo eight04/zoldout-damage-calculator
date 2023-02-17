@@ -146,6 +146,15 @@ const weapons = [
     }
   },
   {
+    name: "美味食譜100選",
+    cost: 8,
+    grade: 3,
+    atk: 400,
+    atkType: "heal",
+    modLv: "SS",
+    modType: "int",
+  },
+  {
     name: "海魔獸歷史",
     cost: 4,
     grade: 3,
@@ -297,6 +306,17 @@ const weapons = [
     modLv: "A",
     modType: "str",
     targets: 99,
+    bonus: 30,
+  },
+  {
+    name: "專武（兔子莎蓮娜）",
+    cost: 2,
+    grade: 4,
+    atk: 30,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int",
+    targets: 1,
     bonus: 30,
   },
 ];
