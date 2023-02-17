@@ -1,5 +1,13 @@
 export default [
   {
+    name: "訓練用陷阱弓",
+    cost: 5,
+    grade: 1,
+    trap: {
+      atk: 1300,
+    }
+  },
+  {
     name: "誘毒弓",
     cost: 3,
     grade: 2,
@@ -194,7 +202,9 @@ export default [
     cost: 5,
     grade: 3,
     trap: {
-      atk: 2900
+      atk: 1600,
+      modLv: "S",
+      modType: "int"
     }
   },
   {
@@ -288,6 +298,16 @@ export default [
     atk: 300,
     modLv: "C",
     bonus: 30
+  },
+  {
+    name: "反向彈射陷阱弓MK2",
+    cost: 4,
+    grade: 3,
+    trap: {
+      atk: 1200,
+      modLv: "S",
+      modType: "int"
+    }
   },
   {
     name: "狂暴追獵",
