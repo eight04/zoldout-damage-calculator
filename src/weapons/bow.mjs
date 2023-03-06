@@ -198,6 +198,47 @@ export default [
     hit: 2
   },
   {
+    name: "深沉之音",
+    cost: 4,
+    grade: 4,
+    trap: {
+      atk: 1300,
+      modLv: "A",
+      modType: "int"
+    }
+  },
+  {
+    name: "深沉之音．第二樂章",
+    cost: 4,
+    grade: 4,
+    trap: {
+      atk: 1350,
+      modLv: "S",
+      modType: "int"
+    }
+  },
+  {
+    name: "深沉之音．最終樂章",
+    cost: 2,
+    grade: 4,
+    trap: {
+      atk: 1400,
+      modLv: "SS",
+      modType: "int"
+    }
+  },
+  {
+    name: "街角獵手",
+    cost: 5,
+    grade: 3,
+    trap: {
+      atk: 1870,
+      modLv: "SSS",
+      modType: "int",
+    },
+    targetBuff: [{id: "streetHunter", def: -350, times: 999}]
+  },
+  {
     name: "彈射陷阱弓MK2",
     cost: 5,
     grade: 3,

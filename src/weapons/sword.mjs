@@ -151,6 +151,24 @@ export default [
     modLv: "A",
   },
   {
+    name: "大馬達碧綠結他",
+    cost: 3,
+    grade: 3,
+    atk: 500,
+    stance: {
+      gain: 1
+    }
+  },
+  {
+    name: "大馬達碧綠結他（一架）",
+    cost: 1,
+    grade: 3,
+    atk: 500,
+    stance: {
+      gain: 1
+    }
+  },
+  {
     name: "閃燃焰劍",
     cost: 4,
     grade: 3,
@@ -291,6 +309,39 @@ export default [
     atk: 500,
     atkType: "lightning",
     modLv: "B",
+  },
+  {
+    name: "狂熱之聲",
+    cost: 2,
+    grade: 4,
+    atk: 300,
+    modLv: "F",
+    stance: {
+      gain: 1
+    }
+  },
+  {
+    name: "狂熱之聲．第二樂章",
+    cost: 3,
+    grade: 4,
+    atk: 380,
+    modLv: "E",
+    stance: {
+      use: 1,
+      gain: 2,
+      bonus: 30
+    }
+  },
+  {
+    name: "狂熱之聲．最終樂章",
+    cost: 4,
+    grade: 4,
+    atk: 450,
+    modLv: "C",
+    stance: {
+      use: 2,
+      bonus: 50
+    }
   },
   {
     name: "爆燃殆盡",

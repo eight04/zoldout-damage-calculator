@@ -173,6 +173,18 @@ const weapons = [
     modType: "int",
   },
   {
+    name: "大馬達的激情",
+    cost: 4,
+    grade: 3,
+    atk: 250,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int",
+    buff: [
+      {atk: 250, times: 99, int: -700},
+    ]
+  },
+  {
     name: "火焰之加護",
     cost: 4,
     grade: 4,
@@ -199,6 +211,34 @@ const weapons = [
     atkType: "magic",
     modLv: "C",
     modType: "str"
+  },
+  {
+    name: "摺疊式音箱",
+    cost: 4,
+    grade: 4,
+    atk: 80,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int"
+  },
+  {
+    name: "摺疊式音箱．第二樂章",
+    cost: 4,
+    grade: 4,
+    atk: 80,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int"
+  },
+  {
+    name: "摺疊式音箱．最終樂章",
+    cost: 3,
+    grade: 4,
+    atk: 80,
+    atkType: "heal",
+    modLv: "D",
+    modType: "int",
+    targets: 99
   },
   {
     name: "神怒之書",

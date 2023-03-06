@@ -188,6 +188,14 @@ const weapons = [
     range: "middle",
   },
   {
+    name: "老大的象徵",
+    cost: 4,
+    grade: 3,
+    atk: 790,
+    modLv: "E",
+    range: "nearSmall",
+  },
+  {
     name: "碧空颶風",
     cost: 8,
     casting: 4,
@@ -217,6 +225,33 @@ const weapons = [
       time: 3
     },
     range: "middle"
+  },
+  {
+    name: "爆烈敲擊",
+    cost: 8,
+    casting: 5,
+    grade: 4,
+    range: "middle",
+    atk: 400,
+    modLv: "D"
+  },
+  {
+    name: "爆烈敲擊．第二樂章",
+    cost: 7,
+    casting: 4,
+    grade: 4,
+    range: "nearLarge",
+    atk: 200,
+    modLv: "B"
+  },
+  {
+    name: "爆烈敲擊．最終樂章",
+    cost: 6,
+    casting: 3,
+    grade: 4,
+    range: "large",
+    atk: 0,
+    modLv: "SSS"
   },
   {
     name: "高級魔法凝聚",
