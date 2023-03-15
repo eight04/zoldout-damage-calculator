@@ -1,10 +1,30 @@
 import {writeFile, readFile} from "fs/promises";
 import gs from "google-spreadsheet";
 
+const STAMINA = {
+  "普通": {
+    "1-1": 12,
+    "1-6": 14,
+    "1-11": 16,
+    "2-4": 17,
+    "2-14": 18,
+    "3-8": 19,
+    "3-15": 20
+  },
+  "困難": {
+    "1-1": 18,
+    "1-9": 19,
+    "2-2": 20,
+  },
+};
+
 const DIFFICULTY = {
   n: "普通",
+  easy: "普通",
   h: "困難",
-  nm: "惡夢"
+  hard: "困難",
+  nm: "惡夢",
+  nightmare: "惡夢"
 };
 
 const doc = new gs.GoogleSpreadsheet("1CeTO-Bae2xNGrAtTo1zAb81joirxu4CGnrdVieXQbfU");
@@ -44,8 +64,16 @@ ${drawTable(sortedItems)}
 `);
 
 function getStageStamina(stage) {
-  if (getDifficulty(stage.name) === 0) return 10;
-  return 20;
+  const difficulty = stage.name.slice(0, 2);
+  const index = stage.name.slice(2);
+  if (difficulty == "惡夢") return 20;
+  const map = STAMINA[difficulty];
+  let result;
+  for (const key in map) {
+    if (key.localeCompare(index, undefined, {numeric: true}) > 0) break;
+    result = map[key];
+  }
+  return result;
 }
 
 function getDifficulty(s) {
@@ -91,7 +119,7 @@ function dropsToLine(drops) {
 }
 
 function formatName(s) {
-  const [, d, m] = s.match(/^(n|h|NM)-(.*)/i);
+  const [, d, m] = s.match(/^(n|h|NM|easy|hard|nightmare)-(.*)/i);
   return `${DIFFICULTY[d.toLowerCase()]}${m}`;
 }
 
