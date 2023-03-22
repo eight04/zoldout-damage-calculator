@@ -38,9 +38,9 @@ Used by: None
 </tr>
 
 <tr>
-<td>1.26</td>
+<td>1.00</td>
 <td>困難1-13</td>
-<td>1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</td>
+<td>1.0黃金齒輪/0.5絲綢/19.0小型雷電結晶/1.0暗影杖</td>
 </tr>
 
 <tr>
@@ -171,6 +171,31 @@ Used by: None
 Used by: 初等暴風法杖/小雞閃光杖/空間法杖/魔法防護杖/快速回復之書/強化魔法防護杖/搗蛋南瓜君/星光蟹王杖/碧空颶風/腥紅血荊
 
 </details> </td></tr>
+<tr><td>絲綢</td><td>
+<details> <summary>[0.04] [普通1-13] 0.6絲綢/21.4鐵塊/0.4重鐵</summary>
+<table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
+
+<tr>
+<td>0.04</td>
+<td>普通1-13</td>
+<td>0.6絲綢/21.4鐵塊/0.4重鐵</td>
+</tr>
+
+<tr>
+<td>0.03</td>
+<td>困難1-13</td>
+<td>1.0黃金齒輪/0.5絲綢/19.0小型雷電結晶/1.0暗影杖</td>
+</tr>
+
+<tr>
+<td>0.01</td>
+<td>惡夢1-13</td>
+<td>0.7黃金齒輪/0.2絲綢/29.0鐵塊/0.2天之鎖鏈</td>
+</tr>
+</table>
+Used by: 重鐵/暗影杖/老大的象徵/午安熊/天之鎖鏈
+
+</details> </td></tr>
 <tr><td>重鐵</td><td>
 <details> <summary>[0.03] [普通1-13] 0.6絲綢/21.4鐵塊/0.4重鐵</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
@@ -221,31 +246,6 @@ Used by: None
 </tr>
 </table>
 Used by: None
-
-</details> </td></tr>
-<tr><td>森林狼王的皮革</td><td>
-<details> <summary>[0.06] [普通2-8] 1.0森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</summary>
-<table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
-
-<tr>
-<td>0.06</td>
-<td>普通2-8</td>
-<td>1.0森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</td>
-</tr>
-
-<tr>
-<td>0.02</td>
-<td>困難2-8</td>
-<td>0.3森林狼王的爪/0.5森林狼王的皮革/0.9森林鳥羽/6.8精靈月桂樹木材/0.6狼牙大劍</td>
-</tr>
-
-<tr>
-<td>0.01</td>
-<td>惡夢2-8</td>
-<td>0.7森林狼王的爪/0.1森林狼王的皮革/13.8中型自然結晶/0.4生命滿溢</td>
-</tr>
-</table>
-Used by: 狼牙弓/狼牙大劍/生命滿溢
 
 </details> </td></tr>
 <tr><td>精靈月桂樹木材</td><td>
@@ -327,7 +327,7 @@ Used by: 狼牙弓/狼牙大劍/生命滿溢
 <tr>
 <td>0.39</td>
 <td>普通2-8</td>
-<td>1.0森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</td>
+<td>0.3森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</td>
 </tr>
 
 <tr>
@@ -376,13 +376,13 @@ Used by: 炸彈弓/遊擊短弓/彈射陷阱弓/連射弓/楓木弓/騷靈之弓
 
 </details> </td></tr>
 <tr><td>狼牙弓</td><td>
-<details> <summary>[0.03] [普通2-8] 1.0森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</summary>
+<details> <summary>[0.03] [普通2-8] 0.3森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 
 <tr>
 <td>0.03</td>
 <td>普通2-8</td>
-<td>1.0森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</td>
+<td>0.3森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</td>
 </tr>
 </table>
 Used by: None
@@ -2286,31 +2286,6 @@ Used by: 木製法杖/小雞閃光杖/空間法杖/火焰法杖/引燃火劍/橡
 Used by: 初等閃電法杖/大回復之書/騎士長劍/驅散法杖/火焰法杖/大馬達碧綠結他/中級魔法凝聚/超級力量強化杖/高級魔法凝聚/時間壓縮杖
 
 </details> </td></tr>
-<tr><td>絲綢</td><td>
-<details> <summary>[0.05] [困難1-13] 1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</summary>
-<table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
-
-<tr>
-<td>0.05</td>
-<td>困難1-13</td>
-<td>1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</td>
-</tr>
-
-<tr>
-<td>0.05</td>
-<td>惡夢1-13</td>
-<td>0.8黃金齒輪/1.0絲綢/29.3鐵塊/1.0天之鎖鏈</td>
-</tr>
-
-<tr>
-<td>0.04</td>
-<td>普通1-13</td>
-<td>0.6絲綢/21.4鐵塊/0.4重鐵</td>
-</tr>
-</table>
-Used by: 重鐵/暗影杖/老大的象徵/午安熊/天之鎖鏈
-
-</details> </td></tr>
 <tr><td>驅散法杖</td><td>
 <details> <summary>[0.06] [困難1-2] 1.0黑鐵齒輪/1.0黃銅齒輪/1.0亞麻布/18.0小型冰雪結晶/1.0驅散法杖</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
@@ -2364,32 +2339,32 @@ Used by: None
 
 </details> </td></tr>
 <tr><td>黃金齒輪</td><td>
-<details> <summary>[0.05] [困難1-13] 1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</summary>
+<details> <summary>[0.05] [困難1-13] 1.0黃金齒輪/0.5絲綢/19.0小型雷電結晶/1.0暗影杖</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 
 <tr>
 <td>0.05</td>
 <td>困難1-13</td>
-<td>1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</td>
+<td>1.0黃金齒輪/0.5絲綢/19.0小型雷電結晶/1.0暗影杖</td>
 </tr>
 
 <tr>
-<td>0.04</td>
+<td>0.03</td>
 <td>惡夢1-13</td>
-<td>0.8黃金齒輪/1.0絲綢/29.3鐵塊/1.0天之鎖鏈</td>
+<td>0.7黃金齒輪/0.2絲綢/29.0鐵塊/0.2天之鎖鏈</td>
 </tr>
 </table>
 Used by: 暗影杖/街角獵手/天之鎖鏈/反向彈射陷阱弓 MK2
 
 </details> </td></tr>
 <tr><td>暗影杖</td><td>
-<details> <summary>[0.05] [困難1-13] 1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</summary>
+<details> <summary>[0.05] [困難1-13] 1.0黃金齒輪/0.5絲綢/19.0小型雷電結晶/1.0暗影杖</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 
 <tr>
 <td>0.05</td>
 <td>困難1-13</td>
-<td>1.0黃金齒輪/1.0絲綢/24.0小型雷電結晶/1.0暗影杖</td>
+<td>1.0黃金齒輪/0.5絲綢/19.0小型雷電結晶/1.0暗影杖</td>
 </tr>
 </table>
 Used by: None
@@ -2605,6 +2580,31 @@ Used by: 小雞閃光杖/大弓/魔法防護杖/加速之書/突襲彎刀/楓木
 </tr>
 </table>
 Used by: 小雞閃光杖/誘毒弓/魔法防護杖/加速之書/楓木弓/蛇毒弓/大商會特製多彩光棒/美味食譜100選/精靈之森
+
+</details> </td></tr>
+<tr><td>森林狼王的皮革</td><td>
+<details> <summary>[0.02] [困難2-8] 0.3森林狼王的爪/0.5森林狼王的皮革/0.9森林鳥羽/6.8精靈月桂樹木材/0.6狼牙大劍</summary>
+<table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
+
+<tr>
+<td>0.02</td>
+<td>困難2-8</td>
+<td>0.3森林狼王的爪/0.5森林狼王的皮革/0.9森林鳥羽/6.8精靈月桂樹木材/0.6狼牙大劍</td>
+</tr>
+
+<tr>
+<td>0.02</td>
+<td>普通2-8</td>
+<td>0.3森林狼王的皮革/6.7精靈月桂樹木材/0.5狼牙弓</td>
+</tr>
+
+<tr>
+<td>0.01</td>
+<td>惡夢2-8</td>
+<td>0.7森林狼王的爪/0.1森林狼王的皮革/13.8中型自然結晶/0.4生命滿溢</td>
+</tr>
+</table>
+Used by: 狼牙弓/狼牙大劍/生命滿溢
 
 </details> </td></tr>
 <tr><td>金屬鳥羽</td><td>
@@ -5437,13 +5437,13 @@ Used by: 閃耀之書/憤怒之書/大回復之書/淨化之書/燃燒之書/加
 
 </details> </td></tr>
 <tr><td>鐵塊</td><td>
-<details> <summary>[1.46] [惡夢1-13] 0.8黃金齒輪/1.0絲綢/29.3鐵塊/1.0天之鎖鏈</summary>
+<details> <summary>[1.45] [惡夢1-13] 0.7黃金齒輪/0.2絲綢/29.0鐵塊/0.2天之鎖鏈</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 
 <tr>
-<td>1.46</td>
+<td>1.45</td>
 <td>惡夢1-13</td>
-<td>0.8黃金齒輪/1.0絲綢/29.3鐵塊/1.0天之鎖鏈</td>
+<td>0.7黃金齒輪/0.2絲綢/29.0鐵塊/0.2天之鎖鏈</td>
 </tr>
 
 <tr>
@@ -5834,13 +5834,13 @@ Used by: None
 
 </details> </td></tr>
 <tr><td>天之鎖鏈</td><td>
-<details> <summary>[0.05] [惡夢1-13] 0.8黃金齒輪/1.0絲綢/29.3鐵塊/1.0天之鎖鏈</summary>
+<details> <summary>[0.01] [惡夢1-13] 0.7黃金齒輪/0.2絲綢/29.0鐵塊/0.2天之鎖鏈</summary>
 <table><tr><th>Rate</th> <th>Stage</th> <th>Drops</th> </tr>
 
 <tr>
-<td>0.05</td>
+<td>0.01</td>
 <td>惡夢1-13</td>
-<td>0.8黃金齒輪/1.0絲綢/29.3鐵塊/1.0天之鎖鏈</td>
+<td>0.7黃金齒輪/0.2絲綢/29.0鐵塊/0.2天之鎖鏈</td>
 </tr>
 </table>
 Used by: None
