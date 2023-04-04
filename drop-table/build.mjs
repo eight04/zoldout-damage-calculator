@@ -73,6 +73,9 @@ function getStageStamina(stage) {
     if (key.localeCompare(index, undefined, {numeric: true}) > 0) break;
     result = map[key];
   }
+  if (difficulty === "普通") {
+    result = Math.floor(result / 2);
+  }
   return result;
 }
 
