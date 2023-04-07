@@ -59,6 +59,7 @@ class State {
     this.buff = buff.slice();
     this.targetBuff = [];
     this.targets = 0;
+    this.collision = 0;
 
     this.poison = poison ? [{atk: 0, turn: 99}] : [];
     this.lightning = {};
@@ -220,6 +221,7 @@ function processWeapon(state, weapon) {
   state.hit = weapon.hit || (weapon.atk || weapon.modLv ? 1 : 0);
   state.damage = 0;
   state.targets = Math.min(state.maxTargets, weapon.targets || 1);
+  state.collision = weapon.collision || 0;
   calculatePassive(state, weapon, "beforeWeapon");
   const def = getDef(state, weapon);
   const resist = getResist(state, weapon);

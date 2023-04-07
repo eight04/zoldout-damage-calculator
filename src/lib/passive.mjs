@@ -14,6 +14,13 @@ export default [
     }
   },
   {
+    name: "碰撞傷害（克萊拉）",
+    type: "buff",
+    afterWeapon: state => {
+      state.damage += state.collision * 700;
+    }
+  },
+  {
     name: "攻擊後反擊四次（奧布利）",
     type: "sword",
     afterWeapon: (state) => {
@@ -89,6 +96,13 @@ export default [
       state.cost = cost;
       state.isShadow = false;
       state.damage = damage;
+    }
+  },
+  {
+    name: "使用武器後擊退（莎菈/約瑟芬/薇薇安）",
+    type: "buff",
+    beforeWeapon: state => {
+      state.collision++;
     }
   },
   {

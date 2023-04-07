@@ -95,6 +95,7 @@ const weapons = [
     atk: 200,
     modLv: "D",
     range: "large",
+    collision: 1,
   },
   {
     name: "冰霜法杖",
@@ -188,6 +189,12 @@ const weapons = [
     range: "middle",
   },
   {
+    name: "星光蟹王杖",
+    cost: 1,
+    grade: 3,
+    buff: [{selfMdef: 400, times: 999, id: "starlight"}],
+  },
+  {
     name: "老大的象徵",
     cost: 4,
     grade: 3,
@@ -203,6 +210,7 @@ const weapons = [
     atk: 120,
     modLv: "C",
     range: "large",
+    collision: 1,
   },
   {
     name: "閃光法杖",

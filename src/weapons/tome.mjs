@@ -84,6 +84,7 @@ const weapons = [
     atkType: "magic",
     modLv: "D",
     modType: "str",
+    collision: 1,
   },
   {
     name: "智慧之書",
@@ -347,6 +348,7 @@ const weapons = [
     modType: "str",
     targets: 99,
     bonus: 30,
+    collision: 1,
   },
   {
     name: "專武（兔子莎蓮娜）",

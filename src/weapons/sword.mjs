@@ -98,7 +98,8 @@ export default [
     cost: 5,
     grade: 2,
     atk: 480,
-    modLv: "A"
+    modLv: "A",
+    collision: 1,
   },
   {
     name: "狼牙大劍",
@@ -110,7 +111,8 @@ export default [
       use: 2,
       gain: 0,
       bonus: 60
-    }
+    },
+    collision: 1,
   },
   {
     name: "搗蛋南瓜君",
@@ -511,6 +513,7 @@ export default [
       state.getBuffedStat("atk") * 1.35 +
       state.getBuffedStat("selfDef") * 1
     ),
-    hit: 1
+    hit: 1,
+    collision: 1,
   }
 ];

@@ -29,14 +29,16 @@ export default [
     cost: 4,
     grade: 2,
     atk: 100,
-    modLv: "E"
+    modLv: "E",
+    collision: 1
   },
   {
     name: "遊擊短弓",
     cost: 3,
     grade: 2,
     atk: 150,
-    modLv: "C"
+    modLv: "C",
+    collision: 1,
   },
   {
     name: "彈射陷阱弓",
@@ -44,7 +46,8 @@ export default [
     grade: 2,
     trap: {
       atk: 2250
-    }
+    },
+    collision: 1
   },
   {
     name: "連射弓",
@@ -60,7 +63,8 @@ export default [
     grade: 2,
     trap: {
       atk: 1850
-    }
+    },
+    collision: 1,
   },
   {
     name: "楓木弓",
@@ -85,7 +89,8 @@ export default [
     cost: 3,
     grade: 2,
     atk: 250,
-    modLv: "E"
+    modLv: "E",
+    collision: 1,
   },
   {
     name: "劇毒骸蝶",
@@ -103,7 +108,8 @@ export default [
     cost: 3,
     grade: 4,
     atk: 80,
-    modLv: "B"
+    modLv: "B",
+    collision: 1,
   },
   {
     name: "騷靈之弓",
@@ -119,6 +125,7 @@ export default [
     atk: 80,
     modLv:"D",
     targetBuff: [{id: "heavyBomb", def: -100, times: 99}],
+    collision: 1,
   },
   {
     name: "元素獵者",
@@ -246,7 +253,8 @@ export default [
       atk: 1600,
       modLv: "S",
       modType: "int"
-    }
+    },
+    collision: 1,
   },
   {
     name: "精靈之森",
@@ -309,14 +317,16 @@ export default [
     cost: 6,
     grade: 4,
     atk: 100,
-    modLv: "D"
+    modLv: "D",
+    collision: 1,
   },
   {
     name: "天之鎖鍊",
     cost: 4,
     grade: 4,
     atk: 350,
-    modLv: "C"
+    modLv: "C",
+    collision: 1,
   },
   {
     name: "阿波羅",
@@ -348,7 +358,8 @@ export default [
       atk: 1200,
       modLv: "S",
       modType: "int"
-    }
+    },
+    collision: 1,
   },
   {
     name: "狂暴追獵",
