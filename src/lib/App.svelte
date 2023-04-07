@@ -23,11 +23,14 @@ weapons.unshift({
 
 const NAME_TO_WEAPON = Object.fromEntries(weapons.map(w => [w.name, w]));
 
-const atk = getStore(`${storeKey}/atk`, 700);
-const def = getStore(`comm/def`, 200);
-const int = getStore(`${storeKey}/int`, 700);
-const mdef = getStore(`comm/mdef`, 200);
 const hp = getStore(`comm/hp`, 2736);
+const def = getStore(`comm/def`, 200);
+const mdef = getStore(`comm/mdef`, 200);
+
+const atk = getStore(`${storeKey}/atk`, 700);
+const int = getStore(`${storeKey}/int`, 700);
+const selfDef = getStore(`${storeKey}/selfDef`, 1000);
+const selfMdef = getStore(`${storeKey}/selfMdef`, 500);
 
 const fireResist = getStore(`comm/fireResist`, 0);
 const waterResist = getStore(`comm/waterResist`, 0);
@@ -76,10 +79,13 @@ $: {
   ];
   options = {
     hp: $hp,
-    atk: $atk,
     def: $def,
-    int: $int,
     mdef: $mdef,
+
+    atk: $atk,
+    int: $int,
+    selfDef: $selfDef,
+    selfMdef: $selfMdef,
 
     fire: $fire,
     freeze: $freeze,
@@ -199,14 +205,18 @@ function addAllToCompare() {
 <div class="base-info">
   <span>血量</span>
   <input type="number" bind:value={$hp} class="cspan3">
+  <span>防禦</span>
+  <input type="number" bind:value={$def} class="cspan3">
+  <span>魔防</span>
+  <input type="number" bind:value={$mdef} class="cspan3">
   <span>力量</span>
   <input type="number" bind:value={$atk}>
-  <span>防禦</span>
-  <input type="number" bind:value={$def}>
+  <span>自身物防</span>
+  <input type="number" bind:value={$selfDef}>
   <span>智力</span>
   <input type="number" bind:value={$int}>
-  <span>魔防</span>
-  <input type="number" bind:value={$mdef}>
+  <span>自身魔防</span>
+  <input type="number" bind:value={$selfMdef}>
   <span>火抗</span>
   <input type="number" bind:value={$fireResist}>
   <span>水抗</span>
@@ -235,8 +245,8 @@ function addAllToCompare() {
   <input type="number" bind:value={$poisonTurns}>
   <span>當前架勢</span>
   <input type="number" bind:value={$stance}>
-  <span>所有攻擊力增加（排位buff）</span>
-  <input type="number" bind:value={$finalBonus} class="cspan3">
+  <span class="cspan">所有攻擊力增加（排位buff）</span>
+  <input type="number" bind:value={$finalBonus} class="cspan">
   {#each passive as p, i}
     {#if currentPage === p.type || p.type === "buff"}
       <label class="cspan">

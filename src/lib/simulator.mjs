@@ -26,17 +26,21 @@ function getWeaponMod(lv) {
 class State {
   constructor({
     hp,
-    atk, def, int, mdef,
+    atk, int, selfDef = 1000, selfMdef = 500,
+    def, mdef,
     fireResist, waterResist, poisonResist, lightningResist,
     fire = false, freeze = false, poison = false,
     poisonTurns, stance = 0, maxTargets = 1,
     passive,
     buff = []
   }) {
-    this.hp = hp;
     this.atk = atk;
-    this.def = def;
     this.int = int;
+    this.selfDef = selfDef;
+    this.selfMdef = selfMdef;
+
+    this.hp = hp;
+    this.def = def;
     this.mdef = mdef;
 
     this.fireResist = fireResist;
@@ -65,6 +69,12 @@ class State {
     const s = new State({});
     Object.assign(s, this, extra);
     return s;
+  }
+  getBuffedStat(prop, type = "stack") {
+    if (type === "stack") {
+      return (this[prop] || 0) + this.buff.reduce((output, b) => output + (b[prop] || 0), 0);
+    }
+    return (this[prop] || 1) * this.buff.reduce((output, b) => output * (1 + (b[prop] || 0) / 100), 1);
   }
   getDef(weapon) {
     return getDef(this, weapon);
@@ -217,7 +227,7 @@ function processWeapon(state, weapon) {
     calculatePassive(state, weapon, "beforeHit");
     state.currentHit = i + 1;
     state.totalHit++;
-    let atk = getAtk(state, weapon);
+    let atk = weapon.getAtk ? weapon.getAtk(state) : getAtk(state, weapon);
     atk *= state.buff.reduce((output, b) => output * (b.bonus ? (b.bonus + 100) / 100 : 1), 1);
     if (weapon.stance?.use === state.stance) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;

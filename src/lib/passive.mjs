@@ -122,7 +122,7 @@ export default [
     name: "使用火武器後加速（歌莉雅）",
     type: "wand",
     afterWeapon: (state, weapon) => {
-      if (weapon.fire?.atk) {
+      if (weapon.fire?.time) {
         state.cost -= 2;
       }
     }

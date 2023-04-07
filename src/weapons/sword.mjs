@@ -501,5 +501,16 @@ export default [
     atk: 700,
     // NOTE: this get buffed by bonus
     atkType: "fire"
+  },
+  {
+    name: "奧義（克萊拉）",
+    cost: 5,
+    atkType: "physic",
+    getAtk: state => (
+      1500 +
+      state.getBuffedStat("atk") * 1.35 +
+      state.getBuffedStat("selfDef") * 1
+    ),
+    hit: 1
   }
 ];
