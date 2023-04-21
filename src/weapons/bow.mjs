@@ -466,6 +466,17 @@ export default [
     targetBuff: [{def: -150, times: 99}]
   },
   {
+    name: "奧義（薇薇安）",
+    cost: 4,
+    trap: {
+      atk: 100,
+      modLv: "C0",
+      hit: 4,
+      bonus: 20,
+      time: 15
+    }
+  },
+  {
     name: "奧義（艾娜）",
     cost: 5,
     atk: 579,
