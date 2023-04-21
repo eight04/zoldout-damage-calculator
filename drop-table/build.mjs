@@ -1,6 +1,8 @@
 import {writeFile, readFile} from "fs/promises";
 import gs from "google-spreadsheet";
 
+const NORMAL_HALF = false;
+
 const STAMINA = {
   "普通": {
     "1-1": 12,
@@ -73,7 +75,7 @@ function getStageStamina(stage) {
     if (key.localeCompare(index, undefined, {numeric: true}) > 0) break;
     result = map[key];
   }
-  if (difficulty === "普通") {
+  if (difficulty === "普通" && NORMAL_HALF) {
     result = Math.floor(result / 2);
   }
   return result;
