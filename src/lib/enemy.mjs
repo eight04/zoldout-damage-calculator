@@ -72,5 +72,14 @@ export default [
     poisonResist: 50,
     lightningResist: 30
   },
+  {
+    name: "霧影蛇龍",
+    def: 385,
+    mdef: 1049,
+    fireResist: 30,
+    waterResist: 80,
+    poisonResist: -30,
+    lightningResist: 40
+  }
 ];
 
