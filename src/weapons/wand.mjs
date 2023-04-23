@@ -262,6 +262,22 @@ const weapons = [
     modLv: "SSS"
   },
   {
+    name: "風暴之怒",
+    cost: 10,
+    casting: 10,
+    atk: 1880,
+    modLv: "A",
+    range: "middle"
+  },
+  {
+    name: "風暴之怒（追擊）",
+    cost: 5,
+    casting: 5,
+    atk: 2435, // FIXME: this is the raw number in gold grade, the original value might be 2320?
+    modLv: 2.85,
+    range: "middle",
+  },
+  {
     name: "高級魔法凝聚",
     cost: 5,
     grade: 4,
@@ -375,6 +391,21 @@ const weapons = [
     atk: 742,
     modLv: "A",
     range: "middle"
+  },
+  {
+    name: "群鯊使者",
+    cost: 7,
+    casting: 4,
+    grade: 4,
+    atk: 160,
+    modLv: "D",
+    range: "small",
+    water: {
+      atk: 160,
+      modLv: "D",
+      modType: "int",
+      time: 0
+    }
   },
   {
     name: "尤里走路",

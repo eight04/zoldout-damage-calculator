@@ -157,6 +157,14 @@ export default [
     modLv: "D"
   },
   {
+    name: "魚叉射手",
+    cost: 3,
+    grade: 3,
+    atk: 520,
+    modLv: "D",
+    collision: 1,
+  },
+  {
     name: "引蜂毒素",
     cost: 4,
     grade: 3,
@@ -438,6 +446,14 @@ export default [
       atk: 100,
       time: 6
     }
+  },
+  {
+    name: "專武（亞歷克斯）",
+    cost: 3,
+    grade: 3,
+    atk: 450,
+    modLv: 1.45,
+    collision: 1,
   },
   {
     name: "奧義（格蕾絲）",

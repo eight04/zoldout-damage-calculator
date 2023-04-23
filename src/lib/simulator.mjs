@@ -2,6 +2,7 @@ import allPassive from "./passive.mjs";
 
 // NOTE: we use F++ instead of F
 const WEAPON_MOD = {
+  G: 0.6,
   F: 0.85,
   E: 1.1,
   D: 1.35,

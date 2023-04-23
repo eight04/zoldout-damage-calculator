@@ -242,6 +242,15 @@ const weapons = [
     targets: 99
   },
   {
+    name: "船帆操作指南",
+    cost: 4,
+    grade: 3,
+    atk: 100,
+    atkType: "heal",
+    modLv: "E",
+    modType: "int",
+  },
+  {
     name: "神怒之書",
     cost: 4,
     grade: 3,
@@ -361,6 +370,16 @@ const weapons = [
     targets: 1,
     bonus: 30,
   },
+  {
+    name: "專武（刃之）",
+    cost: 5,
+    atk: 350,
+    atkType: "heal",
+    modLv: "C",
+    modType: "int",
+    targets: 1,
+    buff: [{injuryBonus: -20, times: 99}]
+  }
 ];
 
 export default weapons;

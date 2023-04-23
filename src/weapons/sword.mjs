@@ -171,6 +171,17 @@ export default [
     }
   },
   {
+    name: "海上衛士",
+    cost: 2,
+    atk: 20,
+    atkType: "heal",
+    modLv: "G",
+    modType: "int",
+    stance: {
+      gain: 1
+    }
+  },
+  {
     name: "閃燃焰劍",
     cost: 4,
     grade: 3,
@@ -444,6 +455,18 @@ export default [
     modType: "int",
     stance: {
       gain: 2
+    }
+  },
+  {
+    name: "高周波切割分解器",
+    cost: 3,
+    grade: 4,
+    atk: 930,
+    modLv: "E",
+    stance: {
+      use: 1,
+      gain: 2,
+      bonus: 30
     }
   },
   {
