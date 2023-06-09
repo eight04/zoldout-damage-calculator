@@ -289,6 +289,15 @@ const weapons = [
     }
   },
   {
+    name: "凶獸撕咬",
+    cost: 2,
+    grade: 3,
+    atk: 240,
+    atkType: "lightning",
+    modLv: "G",
+    modType: "str"
+  },
+  {
     name: "眾神之怒",
     cost: 3,
     grade: 4,

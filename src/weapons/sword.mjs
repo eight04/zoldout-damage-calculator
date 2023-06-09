@@ -357,6 +357,48 @@ export default [
     }
   },
   {
+    name: "赤嵐利牙",
+    cost: 6,
+    grade: 3,
+    atk: 600,
+    modLv: "A",
+    stance: {
+      use: 2
+    }
+  },
+  {
+    name: "赤嵐利牙（背）",
+    cost: 6,
+    grade: 3,
+    atk: 600,
+    modLv: "A",
+    stance: {
+      use: 2
+    },
+    bonus: 60
+  },
+  {
+    name: "赤嵐利牙（背）（二架）",
+    cost: 4,
+    grade: 3,
+    atk: 600,
+    modLv: "A",
+    stance: {
+      use: 2
+    },
+    bonus: 60,
+  },
+  {
+    name: "赤嵐利牙（二架）",
+    cost: 4,
+    grade: 3,
+    atk: 600,
+    modLv: "A",
+    stance: {
+      use: 2
+    }
+  },
+  {
     name: "爆燃殆盡",
     cost: 3,
     grade: 4,

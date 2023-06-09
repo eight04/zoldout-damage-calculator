@@ -254,6 +254,14 @@ export default [
     targetBuff: [{id: "streetHunter", def: -350, times: 999}]
   },
   {
+    name: "徹甲旋殼弓",
+    cost: 2,
+    grade: 3,
+    atk: 440,
+    modLv: "G",
+    targetBuff: [{id: "spiralShell", def: -100, times: 999}]
+  },
+  {
     name: "彈射陷阱弓MK2",
     cost: 5,
     grade: 3,

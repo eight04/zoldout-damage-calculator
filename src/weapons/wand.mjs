@@ -278,6 +278,16 @@ const weapons = [
     range: "middle",
   },
   {
+    name: "野性吉米杖",
+    cost: 4,
+    casting: 4,
+    grade: 3,
+    atk: 480,
+    atkType: "heal",
+    modLv: "F",
+    range: "middle"
+  },
+  {
     name: "高級魔法凝聚",
     cost: 5,
     grade: 4,
