@@ -388,6 +388,11 @@ const weapons = [
     modType: "int",
     targets: 1,
     buff: [{injuryBonus: -20, times: 99}]
+  },
+  {
+    name: "專武（珍）",
+    cost: 5 - 2,
+    buff: [{bonus: 30, times: 1}] // FIXME: this should be magic bonus
   }
 ];
 

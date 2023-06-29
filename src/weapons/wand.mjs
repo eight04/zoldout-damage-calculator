@@ -181,6 +181,13 @@ const weapons = [
     range: "middle",
   },
   {
+    name: "中級魔法凝聚",
+    cost: 4,
+    grade: 3,
+    buff: [{bonus: 15, times: 1, id: "midMagicCondense"}],
+    range: "single"
+  },
+  {
     name: "彩蛋權杖",
     cost: 5,
     grade: 3,
