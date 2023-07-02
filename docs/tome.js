@@ -1,2 +1,2 @@
-var tome=function(){"use strict";return new tomeA33D082F.A({target:document.body,props:{weapons:tomeA33D082F.w,storeKey:"tome"}})}();
+!function(){"use strict";init9Daf2F2A.i(init9Daf2F2A.b,"tome")}();
 //# sourceMappingURL=tome.js.map

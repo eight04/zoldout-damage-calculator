@@ -30,8 +30,12 @@ class State {
     atk, int, selfDef = 1000, selfMdef = 500,
     def, mdef,
     fireResist, waterResist, poisonResist, lightningResist,
-    fire = false, freeze = false, poison = false,
-    poisonTurns, stance = 0, maxTargets = 1,
+    fire = false, freeze = false, poison = false, lightning = false,
+
+    poisonTurns,
+    lightningAtk,
+
+    stance = 0, maxTargets = 1,
     passive,
     buff = []
   }) {
@@ -63,7 +67,7 @@ class State {
     this.collision = 0;
 
     this.poison = poison ? [{atk: 0, turn: 99}] : [];
-    this.lightning = {};
+    this.lightning = lightning ? {atk: lightningAtk, time: 99} : {};
     this.fire = fire;
     this.freeze = freeze;
   }
@@ -195,7 +199,7 @@ function getResist(state, {atkType}) {
   return state._getResist(null, "physicBonus", "physicInjuryBonus");
 }
 
-function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0}) {
+export function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0}) {
   const charAtk = modType === "int" ?
     int + buff.reduce((output, b) => output + (b.int || 0), 0) :
     atk + buff.reduce((output, b) => output + (b.atk || 0), 0);
@@ -272,9 +276,11 @@ function processWeapon(state, weapon) {
     // FIXME: does lightning work with final bonus?
     const atk = state.getLightningAtk(weapon.lightning);
     state.damage += atk * state.getLightningResist() * state.targets * state.getFinalBonus();
-    if (!state.lightning.atk || weapon.lightning.time > state.lightning.time) {
-      state.lightning.atk = atk;
+    if (weapon.lightning.time > (state.lightning.time || 0)) {
       state.lightning.time = weapon.lightning.time;
+    }
+    if (atk > (state.lightning.atk || 0)) {
+      state.lightning.atk = atk;
     }
   }
 

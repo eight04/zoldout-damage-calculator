@@ -43,6 +43,7 @@ const poison = getStore(`comm/poison`, false);
 const lightning = getStore(`comm/lightning`, false);
 
 const poisonTurns = getStore(`${storeKey}/poisonTurns`, 99);
+const lightningAtk = getStore(`${storeKey}/lightningAtk`, 145);
 const stance = getStore(`${storeKey}/stance`, 0);
 
 const finalBonus = getStore(`${storeKey}/finalBonus`, 0);
@@ -93,6 +94,7 @@ $: {
     lightning: $lightning,
 
     poisonTurns: $poisonTurns,
+    lightningAtk: $lightningAtk,
     stance: $stance,
 
     passiveIds: $passiveIds,
@@ -243,8 +245,10 @@ function addAllToCompare() {
   </label>
   <span>中毒發生次數</span>
   <input type="number" bind:value={$poisonTurns}>
+  <span>觸電傷害</span>
+  <input type="number" bind:value={$lightningAtk}>
   <span>當前架勢</span>
-  <input type="number" bind:value={$stance}>
+  <input type="number" bind:value={$stance} class="cspan3">
   <span class="cspan">所有攻擊力增加（排位buff）</span>
   <input type="number" bind:value={$finalBonus} class="cspan">
   {#each passive as p, i}

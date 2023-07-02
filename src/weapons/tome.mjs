@@ -398,4 +398,3 @@ const weapons = [
 
 export default weapons;
 
-export const buff = weapons.filter(w => w.buff && (!w.modLv && !w.atk));
