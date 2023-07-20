@@ -295,6 +295,20 @@ const weapons = [
     range: "middle"
   },
   {
+    name: "泳裝吉米杖",
+    cost: 7,
+    casting: 4,
+    grade: 4,
+    atk: 180,
+    modLv: "C",
+    range: "small",
+    lightning: {
+      modeLv: 0.465,
+      modType: "int",
+      time: 3
+    }
+  },
+  {
     name: "高級魔法凝聚",
     cost: 5,
     grade: 4,

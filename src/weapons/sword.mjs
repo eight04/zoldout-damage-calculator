@@ -221,6 +221,20 @@ export default [
     }
   },
   {
+    name: "霹靂充氣棒",
+    grad: 4,
+    cost: 3,
+    atk: 450,
+    modLv: "G",
+  },
+  {
+    name: "霹靂充氣棒（觸電）",
+    grad: 4,
+    cost: 1,
+    atk: 450,
+    modLv: "G",
+  },
+  {
     name: "報紙卷+12",
     cost: 2,
     atk: 200,

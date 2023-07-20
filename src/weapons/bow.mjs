@@ -262,6 +262,15 @@ export default [
     targetBuff: [{id: "spiralShell", def: -100, times: 999}]
   },
   {
+    name: "魔力水槍",
+    cost: 2,
+    grade: 4,
+    atk: 200,
+    atkType: "lightning",
+    modLv: "E",
+    modType: "int",
+  },
+  {
     name: "彈射陷阱弓MK2",
     cost: 5,
     grade: 3,

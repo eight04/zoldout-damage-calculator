@@ -251,6 +251,20 @@ const weapons = [
     modType: "int",
   },
   {
+    name: "狂暴西瓜",
+    cost: 3,
+    grade: 4,
+    atk: 300,
+    atkType: "magic",
+    modLv: "G",
+    modType: "str",
+    lightning: {
+      modLv: 0.35 + 0.05,
+      modType: "int",
+      time: 4
+    }
+  },
+  {
     name: "神怒之書",
     cost: 4,
     grade: 3,
