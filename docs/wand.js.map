@@ -1,1 +1,1 @@
-{"version":3,"file":"wand.js","sources":["../src/wand.mjs"],"sourcesContent":["import weapons from \"./weapons/wand.mjs\";\nimport init from \"./init.mjs\";\ninit(weapons, \"wand\");\n"],"names":["init9Daf2F2A","i","a"],"mappings":"yBAEAA,aAAIC,EAACD,aAAOE,EAAE"}
+{"version":3,"file":"wand.js","sources":["../src/wand.mjs"],"sourcesContent":["import weapons from \"./weapons/wand.mjs\";\nimport init from \"./init.mjs\";\ninit(weapons, \"wand\");\n"],"names":["init32Ea9003","i","a"],"mappings":"yBAEAA,aAAIC,EAACD,aAAOE,EAAE"}

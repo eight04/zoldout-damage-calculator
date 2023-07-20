@@ -1,2 +1,2 @@
-!function(){"use strict";init9Daf2F2A.i(init9Daf2F2A.s,"sword")}();
+!function(){"use strict";init32Ea9003.i(init32Ea9003.s,"sword")}();
 //# sourceMappingURL=index.js.map
