@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["../src/index.mjs"],"sourcesContent":["import sword from \"./weapons/sword.mjs\";\nimport init from \"./init.mjs\";\ninit(sword, \"sword\");\n\n"],"names":["init32Ea9003","i","s"],"mappings":"yBAEAA,aAAIC,EAACD,aAAKE,EAAE"}
+{"version":3,"file":"index.js","sources":["../src/index.mjs"],"sourcesContent":["import sword from \"./weapons/sword.mjs\";\nimport init from \"./init.mjs\";\ninit(sword, \"sword\");\n\n"],"names":["init164073Fe","i","s"],"mappings":"yBAEAA,aAAIC,EAACD,aAAKE,EAAE"}

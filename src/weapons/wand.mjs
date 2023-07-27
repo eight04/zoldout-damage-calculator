@@ -567,6 +567,15 @@ const weapons = [
     bonus: 30
   },
   {
+    name: "專武（蒙妮卡）",
+    cost: 3,
+    atk: 225,
+    atkType: "lightning",
+    modLv: "F",
+    range: "nearLarge",
+    bonus: 30
+  },
+  {
     name: "專武（西比拉）",
     cost: 7,
     casting: 7,

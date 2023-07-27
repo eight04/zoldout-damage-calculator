@@ -450,6 +450,16 @@ export default [
     }
   },
   {
+    name: "專武（泳多莉）",
+    cost: 3,
+    grade: 3,
+    atk: 10,
+    atkType: "water",
+    modLv: "F-",
+    modType: "int",
+    hit: 3
+  },
+  {
     name: "專武（聖誕赫利德）",
     cost: 3,
     grade: 3,
@@ -507,6 +517,19 @@ export default [
       hit: 4,
       bonus: 20,
       time: 15
+    }
+  },
+  {
+    name: "奧義（泳多莉）",
+    cost: 4,
+    atk: 160,
+    atkType: "water",
+    modLv: "E0",
+    modType: "int",
+    hit: 5,
+    lightning: {
+      atk: 100,
+      time: 6
     }
   },
   {

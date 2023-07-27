@@ -15,6 +15,7 @@ const WEAPON_MOD = {
   Ex: 3.1
 };
 for (const key in WEAPON_MOD) {
+  WEAPON_MOD[`${key}-`] = WEAPON_MOD[key] - 0.05;
   WEAPON_MOD[`${key}0`] = WEAPON_MOD[key] - 0.1;
 }
 
