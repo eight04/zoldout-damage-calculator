@@ -156,6 +156,16 @@ const weapons = [
     modType: "int",
   },
   {
+    name: "大商會特製記帳本",
+    cost: 5,
+    grade: 3,
+    atk: 50,
+    atkType: "magic",
+    modLv: "C",
+    modType: "str",
+    targetBuff: [{mdef: -100, times: 99}]
+  },
+  {
     name: "海魔獸歷史",
     cost: 4,
     grade: 3,

@@ -131,6 +131,17 @@ export default [
     }
   },
   {
+    name: "大商會特製杖中劍",
+    cost: 2,
+    grade: 3,
+    atk: 250,
+    modLv: "F",
+    buff: [{injuryBonus: -10, times: 99}],
+    stance: {
+      gain: 1
+    }
+  },
+  {
     name: "舞台禮劍",
     cost: 4,
     grade: 3,

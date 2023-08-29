@@ -188,6 +188,26 @@ const weapons = [
     range: "single"
   },
   {
+    name: "大商會特製多彩光棒",
+    cost: 7,
+    casting: 4,
+    grade: 3,
+    atk: 50,
+    modLv: "B",
+    range: "middle",
+    getAtk: state => (
+      50 +
+      state.getBuffedStat("int") * 1.85 +
+      // FIXME: does it make multiple hits?
+      600 * (
+        state.freeze +
+        state.fire +
+        !!state.lightning.time +
+        state.poison.length
+      )
+    )
+  },
+  {
     name: "彩蛋權杖",
     cost: 5,
     grade: 3,

@@ -143,6 +143,21 @@ export default [
     modLv: "C"
   },
   {
+    name: "大商會特製獵弓",
+    cost: 2,
+    grade: 3,
+    atk: 110,
+    modLv: "E"
+  },
+  {
+    name: "大商會特製獵弓（二次傷害）",
+    cost: 2,
+    grade: 3,
+    atk: 110,
+    modLv: "E",
+    bonus: 40
+  },
+  {
     name: "開蛋器",
     cost: 3,
     grade: 3,
