@@ -1,2 +1,2 @@
-!function(){"use strict";init164073Fe.i(init164073Fe.a,"wand")}();
+!function(){"use strict";init0Aa00D50.i(init0Aa00D50.a,"wand")}();
 //# sourceMappingURL=wand.js.map

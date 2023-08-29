@@ -1,2 +1,2 @@
-!function(){"use strict";init164073Fe.i(init164073Fe.w,"bow")}();
+!function(){"use strict";init0Aa00D50.i(init0Aa00D50.w,"bow")}();
 //# sourceMappingURL=bow.js.map

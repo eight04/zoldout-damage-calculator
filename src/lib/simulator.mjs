@@ -14,6 +14,7 @@ const WEAPON_MOD = {
   SSS: 2.85,
   Ex: 3.1
 };
+
 for (const key in WEAPON_MOD) {
   WEAPON_MOD[`${key}-`] = WEAPON_MOD[key] - 0.05;
   WEAPON_MOD[`${key}0`] = WEAPON_MOD[key] - 0.1;
@@ -63,6 +64,7 @@ class State {
     this.totalHit = 0;
     this.stance = stance;
     this.buff = buff.slice();
+    this.buffBonus = {};
     this.targetBuff = [];
     this.targets = 0;
     this.collision = 0;
@@ -79,9 +81,16 @@ class State {
   }
   getBuffedStat(prop, type = "stack") {
     if (type === "stack") {
-      return (this[prop] || 0) + this.buff.reduce((output, b) => output + (b[prop] || 0), 0);
+      const buffBonus = this.buffBonus[prop] || 0;
+      return (this[prop] || 0) + this.buff.reduce((output, b) => output + (b[prop] || 0), 0) * (1 + buffBonus / 100);
     }
     return (this[prop] || 1) * this.buff.reduce((output, b) => output * (1 + (b[prop] || 0) / 100), 1);
+  }
+  getTargetBuffedStat(prop, type = "stack") {
+    if (type === "stack") {
+      return (this[prop] || 0) + this.targetBuff.reduce((output, b) => output + (b[prop] || 0), 0);
+    }
+    return (this[prop] || 1) * this.targetBuff.reduce((output, b) => output * (1 + (b[prop] || 0) / 100), 1);
   }
   getDef(weapon) {
     return getDef(this, weapon);
@@ -143,6 +152,10 @@ class State {
   setTarget(props) {
     Object.assign(this, props);
   }
+  reduceBuffTimes() {
+    this.buff = this.buff.map(b => ({...b, times: b.times - 1})).filter(b => b.times > 0);
+    this.targetBuff = this.targetBuff.map(b => ({...b, times: b.times - 1})).filter(b => b.times > 0);
+  }
 }
 
 export function simulate({
@@ -170,15 +183,15 @@ export function simulate({
   };
 }
 
-function getDef({def, mdef, targetBuff: buff}, {atkType}) {
+function getDef(state, {atkType}) {
   if (atkType === "heal") return 0;
   if (atkType === "water" || atkType === "fire" || atkType === "poison" || atkType === "lightning") {
     return 0;
   }
-  if (atkType === "magic") {
-    return Math.max(mdef + buff.reduce((output, b) => output + (b.mdef || 0), 0), 0);
-  }
-  return Math.max(def + buff.reduce((output, b) => output + (b.def || 0), 0), 0);
+  const value = atkType === "magic" ? 
+    state.getTargetBuffedStat("mdef") :
+    state.getTargetBuffedStat("def");
+  return Math.max(value, 0);
 }
 
 function getResist(state, {atkType}) {
@@ -200,10 +213,10 @@ function getResist(state, {atkType}) {
   return state._getResist(null, "physicBonus", "physicInjuryBonus");
 }
 
-export function getAtk({atk, int, buff}, {modType, modLv, atk: weaponAtk = 0, bonus = 0}) {
+export function getAtk(state, {modType, modLv, atk: weaponAtk = 0, bonus = 0}) {
   const charAtk = modType === "int" ?
-    int + buff.reduce((output, b) => output + (b.int || 0), 0) :
-    atk + buff.reduce((output, b) => output + (b.atk || 0), 0);
+    state.getBuffedStat("int") :
+    state.getBuffedStat("atk");
   return (weaponAtk + (modLv ? charAtk * getWeaponMod(modLv) : 0))
     * (bonus + 100) / 100;
 }
@@ -236,7 +249,7 @@ function processWeapon(state, weapon) {
     state.currentHit = i + 1;
     state.totalHit++;
     let atk = weapon.getAtk ? weapon.getAtk(state) : getAtk(state, weapon);
-    atk *= state.buff.reduce((output, b) => output * (b.bonus ? (b.bonus + 100) / 100 : 1), 1);
+    atk *= state.getBuffedStat("bonus", "multiply");
     if (weapon.stance?.use === state.stance) {
       atk *= ((weapon.stance.bonus || 0) + 100) / 100;
     }
@@ -249,8 +262,7 @@ function processWeapon(state, weapon) {
   }
 
   if (state.hit) {
-    state.buff = state.buff.map(b => ({...b, times: b.times - 1})).filter(b => b.times > 0);
-    state.targetBuff = state.targetBuff.map(b => ({...b, times: b.times - 1})).filter(b => b.times > 0);
+    state.reduceBuffTimes();
   }
 
   if (weapon.trap) {

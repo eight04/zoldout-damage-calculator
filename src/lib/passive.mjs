@@ -7,6 +7,31 @@ export default [
     }
   },
   {
+    name: "力量增加量增加（摩根）",
+    type: "sword",
+    beforeAll: state => {
+      state.buffBonus.atk = 25;
+    }
+  },
+  {
+    name: "架勢武器傷害增加（摩根）",
+    type: "sword",
+    beforeWeapon: (state, weapon) => {
+      if (state.hit && weapon.stance) {
+        state.buff.push({bonus: 15, times: 1});
+      }
+    }
+  },
+  {
+    name: "使用武器後保持第一架勢（摩根）",
+    type: "sword",
+    afterWeapon: state => {
+      if (!state.stance) {
+        state.stance = 1;
+      }
+    }
+  },
+  {
     name: "攻擊力增加（夏洛蒂）",
     type: "sword",
     beforeAll: state => {

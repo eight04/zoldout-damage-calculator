@@ -573,6 +573,16 @@ export default [
     }
   },
   {
+    name: "奧義（摩根）",
+    cost: 2,
+    atk: 1315,
+    modLv: "SS0",
+    stance: {
+      use: 2,
+      bonus: 50
+    }
+  },
+  {
     name: "奧義（夏洛蒂）",
     cost: 5,
     atk: 2022,
@@ -605,5 +615,17 @@ export default [
     ),
     hit: 1,
     collision: 1,
+  },
+  {
+    name: "專武（摩根）",
+    cost: 2,
+    atk: 80,
+    atkType: "physic",
+    modLv: "D",
+    modType: "atk",
+    stance: {
+      gain: 1
+    },
+    buff: [{atk: 300, times: 999}]
   }
 ];
