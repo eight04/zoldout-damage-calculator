@@ -256,7 +256,7 @@ function processWeapon(state, weapon) {
     atk *= state.getFinalBonus();
     state.damage += Math.max(atk - def, 1) * resist * state.getInjuryBonus() * state.targets;
     if (state.lightning?.atk) {
-      state.damage += state.lightning.atk * (100 - state.lightningResist) / 100 * state.targets;
+      state.damage += state.lightning.atk * state.getLightningResist() * state.targets;
     }
     calculatePassive(state, weapon, "afterHit");
   }

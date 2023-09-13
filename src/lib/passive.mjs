@@ -281,6 +281,39 @@ export default [
     }
   },
   {
+    name: "攻擊前觸電（尤拉莉亞）",
+    type: "tome",
+    beforeWeapon: (state, weapon) => {
+      if (state.ulalia) return;
+
+      const targets = weapon.targets ?? 1;
+      if (state.hit && weapon.atkType !== "heal" && targets === 1) {
+        const s = state.clone({
+          ulalia: true,
+        });
+        s.processWeapon({
+          lightning: {
+            atk: 200,
+            time: 7
+          }
+        });
+        state.damage += s.damage;
+        state.lightning = s.lightning;
+      }
+    }
+  },
+  {
+    name: "電傷增加（尤拉莉亞）",
+    type: "buff",
+    beforeAll: state => {
+      state.targetBuff.push({
+        id: "ulalia",
+        lightningInjuryBonus: 20,
+        times: 99
+      });
+    }
+  },
+  {
     name: "生命回復（塔尼亞）",
     type: "tome",
     afterWeapon: (state, weapon) => {
