@@ -1,1 +1,1 @@
-{"version":3,"file":"tome.js","sources":["../src/tome.mjs"],"sourcesContent":["import weapons from \"./weapons/tome.mjs\";\nimport init from \"./init.mjs\";\ninit(weapons, \"tome\");\n"],"names":["init0Aa00D50","i","b"],"mappings":"yBAEAA,aAAIC,EAACD,aAAOE,EAAE"}
+{"version":3,"file":"tome.js","sources":["../src/tome.mjs"],"sourcesContent":["import weapons from \"./weapons/tome.mjs\";\nimport init from \"./init.mjs\";\ninit(weapons, \"tome\");\n"],"names":["init3F7F7Fba","i","b"],"mappings":"yBAEAA,aAAIC,EAACD,aAAOE,EAAE"}

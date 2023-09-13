@@ -1,2 +1,2 @@
-!function(){"use strict";init0Aa00D50.i(init0Aa00D50.a,"wand")}();
+!function(){"use strict";init3F7F7Fba.i(init3F7F7Fba.a,"wand")}();
 //# sourceMappingURL=wand.js.map
